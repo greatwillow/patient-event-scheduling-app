@@ -1,13 +1,13 @@
 import * as actionTypes from "../../constants/actionTypes";
 
-const initialState = {};
+const initialState = { id: null };
 
 const selectedEvent = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_SELECTED_EVENT:
       return {
-        ...state
-        //selectedDate: action.selectedDate
+        ...state,
+        id: action.selectedEvent.id
       };
     default:
       return state;

@@ -9,6 +9,14 @@ const events = (state = initialState, action) => {
         ...state,
         events: state.events.concat(action.event)
       };
+    case actionTypes.LOCAL_DELETE_EVENT:
+      const wantedIndex = state.events
+        .map(event => event.id)
+        .indexOf(action.event.id);
+      return {
+        ...state,
+        events: state.events.filter((item, index) => index != wantedIndex)
+      };
     default:
       return state;
   }

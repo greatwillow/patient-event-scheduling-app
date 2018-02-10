@@ -6,7 +6,6 @@ import {
   requestGetAllEvents,
   localGetAllEvents,
   requestUpdateEvent,
-  localUpdateEvent,
   requestDeleteEvent,
   localDeleteEvent
 } from "./events/actions";
@@ -14,6 +13,8 @@ import {
 import { setModalPurpose, setModalVisibility } from "./modalUI/actions";
 
 import { setSelectedDate } from "./selectedDate/actions";
+
+import { setSelectedEvent } from "./selectedEvent/actions";
 
 export {
   //Events
@@ -24,12 +25,13 @@ export {
   requestGetAllEvents,
   localGetAllEvents,
   requestUpdateEvent,
-  localUpdateEvent,
   requestDeleteEvent,
   localDeleteEvent,
   //Modal
   setModalPurpose,
   setModalVisibility,
   //Selected Date
-  setSelectedDate
+  setSelectedDate,
+  //Selected Event
+  setSelectedEvent
 };

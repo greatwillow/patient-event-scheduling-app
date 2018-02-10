@@ -7,14 +7,14 @@ import * as actions from "../data/appActions";
 import { connect } from "react-redux";
 
 import Calendar from "../components/Calendar";
-import EventList from "../components/EventList";
+import ListOfEvents from "../components/ListOfEvents";
 
 class Root extends Component {
   render() {
     return (
       <View style={styles.mainContainer}>
         <Calendar {...this.props} />
-        <EventList {...this.props} />
+        <ListOfEvents {...this.props} />
       </View>
     );
   }
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   modalUI: state.modalUI,
   selectedDate: state.selectedDate,
+  selectedEvent: state.selectedEvent,
   events: state.events
 });
 
@@ -43,7 +44,6 @@ const mapDispatchToProps = dispatch => ({
   requestGetAllEvents: () => dispatch(actions.requestGetAllEvents()),
   localGetAllEvents: () => dispatch(actions.localGetAllEvents()),
   requestUpdateEvent: event => dispatch(actions.requestUpdateEvent(event)),
-  localUpdateEvent: event => dispatch(actions.localUpdateEvent(event)),
   requestDeleteEvent: event => dispatch(actions.requestDeleteEvent(event)),
   localDeleteEvent: event => dispatch(actions.localDeleteEvent(event)),
   setModalPurpose: modalPurpose =>
@@ -51,7 +51,9 @@ const mapDispatchToProps = dispatch => ({
   setModalVisibility: modalVisibility =>
     dispatch(actions.setModalVisibility(modalVisibility)),
   setSelectedDate: selectedDate =>
-    dispatch(actions.setSelectedDate(selectedDate))
+    dispatch(actions.setSelectedDate(selectedDate)),
+  setSelectedEvent: selectedEvent =>
+    dispatch(actions.setSelectedEvent(selectedEvent))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Root);

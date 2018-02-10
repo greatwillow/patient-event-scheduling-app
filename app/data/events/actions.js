@@ -57,13 +57,6 @@ export const requestUpdateEvent = event => dispatch => {
   dispatch(requestUpdateEventThunk(event));
 };
 
-export function localUpdateEvent(event) {
-  return {
-    type: actionTypes.LOCAL_UPDATE_EVENT,
-    event
-  };
-}
-
 //--------------------------------------------------
 // DELETE EVENT
 //--------------------------------------------------

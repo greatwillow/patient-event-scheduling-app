@@ -16,7 +16,7 @@ import * as actions from "../data/appActions";
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../constants/dimensions";
 import { COLORS } from "../constants/colors";
 
-import FormAddOrUpdateEvent from "./FormAddOrUpdateEvent";
+import FormAddUpdateDeleteEvent from "./FormAddUpdateDeleteEvent";
 
 class ModalStructure extends Component {
   _onRequestClose = () => {
@@ -36,7 +36,7 @@ class ModalStructure extends Component {
           >
             {/* <KeyboardAvoidingView behavior="padding"> */}
             <TouchableWithoutFeedback style={styles.innerContainer}>
-              <FormAddOrUpdateEvent {...this.props} />
+              <FormAddUpdateDeleteEvent {...this.props} />
             </TouchableWithoutFeedback>
             {/* </KeyboardAvoidingView> */}
           </TouchableOpacity>

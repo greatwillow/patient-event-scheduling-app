@@ -5,8 +5,9 @@ import { COLORS } from "../constants/colors";
 import { checkIfInteger } from "../utils/checkIfInteger";
 import TextInputSingleLine from "./TextInputSingleLine";
 import ButtonGeneric from "./ButtonGeneric";
+import CustomFontText from "./CustomFontText";
 
-class FormAddOrUpdateEvent extends Component {
+class FormAddUpdateDeleteEvent extends Component {
   constructor() {
     super();
     this.state = {
@@ -69,19 +70,30 @@ class FormAddOrUpdateEvent extends Component {
     }
   };
 
-  _triggerButtonAction = () => {
+  _triggerAddUpdateDelete = () => {
+    const event = {
+      id:
+        this.props.modalUI.modalPurpose === "ADD"
+          ? null
+          : this.props.selectedEvent.id,
+      title: this.state.title,
+      patientName: this.state.patientName,
+      duration: this.state.duration
+    };
+    this.props.setModalVisibility(false);
     if (this.props.modalUI.modalPurpose === "Add") {
-      const event = {
-        title: this.state.title,
-        patientName: this.state.patientName,
-        duration: this.state.duration
-      };
       this.props.requestAddEvent(event);
-      this.props.setModalVisibility(false);
+    } else if (this.props.modalUI.modalPurpose === "Update") {
+      this.props.requestUpdateEvent(event);
+    } else if (this.props.modalUI.modalPurpose === "Delete") {
+      this.props.requestDeleteEvent(event);
     }
   };
 
   _onPressButton = () => {
+    if (this.props.modalUI.modalPurpose === "Delete") {
+      this._triggerAddUpdateDelete();
+    }
     if (
       this.state.titleFieldTouched &&
       this.state.titleFieldProper &&
@@ -90,7 +102,7 @@ class FormAddOrUpdateEvent extends Component {
       this.state.durationFieldTouched &&
       this.state.durationFieldProper
     ) {
-      this._triggerButtonAction();
+      this._triggerAddUpdateDelete();
     } else {
       if (!this.state.titleFieldTouched || !this.state.titleFieldProper) {
         this.setState({
@@ -123,38 +135,58 @@ class FormAddOrUpdateEvent extends Component {
   };
 
   render() {
-    return (
-      <View style={styles.formContainer}>
-        <Text style={{ fontSize: 20, paddingBottom: 10 }}>
-          {`${this.props.modalUI.modalPurpose} Event`}
-        </Text>
-        <Text style={{ fontSize: 15, paddingBottom: 10 }}>
-          For: {this.props.selectedDate.selectedDate.format("LL")}
-        </Text>
-        <TextInputSingleLine
-          placeholder={"Event Title (3 or more chars)"}
-          style={{ width: SCREEN_WIDTH / 6 * 4 }}
-          onChangeText={this._validifyTitleInput}
-          valid={this.state.titleFieldValid}
-        />
-        <TextInputSingleLine
-          placeholder={"Patient Name (3 or more chars)"}
-          style={{ width: SCREEN_WIDTH / 6 * 4 }}
-          onChangeText={this._validifyNameInput}
-          valid={this.state.nameFieldValid}
-        />
-        <TextInputSingleLine
-          placeholder={"Event Duration (between 1 and 14)"}
-          style={{ width: SCREEN_WIDTH / 6 * 4 }}
-          onChangeText={this._validifyDurationInput}
-          valid={this.state.durationFieldValid}
-        />
-        <ButtonGeneric
-          text={`${this.props.modalUI.modalPurpose} Event`}
-          onPress={this._onPressButton}
-        />
-      </View>
-    );
+    if (
+      this.props.modalUI.modalPurpose === "Add" ||
+      this.props.modalUI.modalPurpose === "Update"
+    ) {
+      return (
+        <View style={styles.formContainer}>
+          <CustomFontText style={{ fontSize: 20, paddingBottom: 10 }}>
+            {`${this.props.modalUI.modalPurpose} Event`}
+          </CustomFontText>
+          <CustomFontText style={{ fontSize: 20, paddingBottom: 10 }}>
+            {`${this.props.selectedEvent.id} ID`}
+          </CustomFontText>
+          <CustomFontText style={{ fontSize: 15, paddingBottom: 10 }}>
+            For: {this.props.selectedDate.selectedDate.format("LL")}
+          </CustomFontText>
+          <TextInputSingleLine
+            placeholder={"Event Title (3 or more chars)"}
+            style={{ width: SCREEN_WIDTH / 6 * 4 }}
+            onChangeText={this._validifyTitleInput}
+            valid={this.state.titleFieldValid}
+          />
+          <TextInputSingleLine
+            placeholder={"Patient Name (3 or more chars)"}
+            style={{ width: SCREEN_WIDTH / 6 * 4 }}
+            onChangeText={this._validifyNameInput}
+            valid={this.state.nameFieldValid}
+          />
+          <TextInputSingleLine
+            placeholder={"Event Duration (between 1 and 14)"}
+            style={{ width: SCREEN_WIDTH / 6 * 4 }}
+            onChangeText={this._validifyDurationInput}
+            valid={this.state.durationFieldValid}
+          />
+          <ButtonGeneric
+            text={`${this.props.modalUI.modalPurpose} Event`}
+            onPress={this._onPressButton}
+          />
+        </View>
+      );
+    } else if (this.props.modalUI.modalPurpose === "Delete") {
+      return (
+        <View style={styles.formContainer}>
+          <CustomFontText style={{ fontSize: 20, paddingBottom: 10 }}>
+            {`${this.props.selectedEvent.id} ID`}
+          </CustomFontText>
+          <ButtonGeneric
+            text={`${this.props.modalUI.modalPurpose} Event`}
+            onPress={this._onPressButton}
+          />
+        </View>
+      );
+    }
   }
 }
 
@@ -170,4 +202,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FormAddOrUpdateEvent;
+export default FormAddUpdateDeleteEvent;
