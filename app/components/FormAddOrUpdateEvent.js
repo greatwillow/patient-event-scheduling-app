@@ -18,7 +18,7 @@ class FormAddOrUpdateEvent extends Component {
       nameFieldTouched: false,
       nameFieldProper: true,
       nameFieldValid: true,
-      duration: null,
+      duration: 0,
       durationFieldTouched: false,
       durationFieldProper: true,
       durationFieldValid: true
@@ -27,11 +27,13 @@ class FormAddOrUpdateEvent extends Component {
   _validifyTitleInput = value => {
     if (value.length >= 3) {
       this.setState({
+        title: value,
         titleFieldTouched: true,
         titleFieldProper: true
       });
     } else {
       this.setState({
+        title: value,
         titleFieldProper: false
       });
     }
@@ -40,11 +42,13 @@ class FormAddOrUpdateEvent extends Component {
   _validifyNameInput = value => {
     if (value.length >= 3) {
       this.setState({
+        patientName: value,
         nameFieldTouched: true,
         nameFieldProper: true
       });
     } else {
       this.setState({
+        patientName: value,
         nameFieldProper: false
       });
     }
@@ -53,25 +57,27 @@ class FormAddOrUpdateEvent extends Component {
   _validifyDurationInput = value => {
     if (checkIfInteger(value) && value >= 1 && value <= 14) {
       this.setState({
+        duration: value,
         durationFieldTouched: true,
         durationFieldProper: true
       });
     } else {
       this.setState({
+        duration: value,
         durationFieldProper: false
       });
     }
   };
 
   _triggerButtonAction = () => {
-    console.log("BUTTON TRIGGERED -------------");
     if (this.props.modalUI.modalPurpose === "Add") {
       const event = {
-        title: "My Event",
-        patientName: "Fred",
-        duration: 8
+        title: this.state.title,
+        patientName: this.state.patientName,
+        duration: this.state.duration
       };
-      this.props.requestEventAdd(event);
+      this.props.requestAddEvent(event);
+      this.props.setModalVisibility(false);
     }
   };
 

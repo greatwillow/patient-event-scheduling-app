@@ -36,7 +36,16 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  requestEventAdd: event => dispatch(actions.requestEventAdd(event)),
+  requestAddEvent: event => dispatch(actions.requestAddEvent(event)),
+  localAddEvent: event => dispatch(actions.localAddEvent(event)),
+  requestGetEvent: event => dispatch(actions.requestGetEvent(event)),
+  localGetEvent: event => dispatch(actions.localGetEvent(event)),
+  requestGetAllEvents: () => dispatch(actions.requestGetAllEvents()),
+  localGetAllEvents: () => dispatch(actions.localGetAllEvents()),
+  requestUpdateEvent: event => dispatch(actions.requestUpdateEvent(event)),
+  localUpdateEvent: event => dispatch(actions.localUpdateEvent(event)),
+  requestDeleteEvent: event => dispatch(actions.requestDeleteEvent(event)),
+  localDeleteEvent: event => dispatch(actions.localDeleteEvent(event)),
   setModalPurpose: modalPurpose =>
     dispatch(actions.setModalPurpose(modalPurpose)),
   setModalVisibility: modalVisibility =>

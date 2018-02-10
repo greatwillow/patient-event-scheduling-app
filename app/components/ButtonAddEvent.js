@@ -11,6 +11,7 @@ class AddEventButton extends Component {
   render() {
     return (
       <MaterialCommunityIcons
+        style={this.props.style}
         name="plus-circle"
         size={70}
         color={COLORS.red}

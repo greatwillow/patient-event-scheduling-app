@@ -1,52 +1,79 @@
 import * as actionTypes from "../../constants/actionTypes";
 import * as actions from "../appActions";
 
-// export function requestEventAdd(event) {
-//   return {
-//     type: actionTypes.REQUEST_EVENT_ADD,
-//     event
-//   };
-// }
+import {
+  requestAddEventThunk,
+  requestGetEventThunk,
+  requestGetAllEventsThunk,
+  requestUpdateEventThunk,
+  requestDeleteEventThunk
+} from "./thunks";
 
-export function requestEventAdd(event) {
-  function thunk(dispatch) {
-    // const eventTitle = event.eventTitle;
-    // const eventPatientName = event.eventPatientName;
-    // const eventDuration = event.eventDuration;
+//--------------------------------------------------
+// ADD EVENT
+//--------------------------------------------------
+export const requestAddEvent = event => dispatch => {
+  dispatch(requestAddEventThunk(event));
+};
 
-    const EVENT = {
-      title: event.title,
-      patientName: event.patientName,
-      duration: event.duration
-    };
-
-    const EVENT_POST_URI = "http://localhost:3000/";
-
-    fetch(EVENT_POST_URI, {
-      //   headers: new Headers({
-      //     Accept: "application/json",
-      //     "Content-Type": "application/json"
-      //   }),
-      method: "POST",
-      body: JSON.stringify(EVENT)
-    })
-      .then(res => {
-        if (res.status == 200) {
-          console.log("SUCCESSFULL 200 RESPONSE ", res);
-          return res.json();
-        } else {
-          throw new Error("Something wrong with the server!");
-        }
-      })
-      .then(data => {
-        console.log("Heres the data ", data);
-      })
-      .catch(err => {
-        console.log("CATCH ERROR IS ", err);
-      });
-  }
+export function localAddEvent(event) {
+  return {
+    type: actionTypes.LOCAL_ADD_EVENT,
+    event
+  };
 }
 
-// export const requestEventAdd = event => dispatch => {
-//   dispatch(requestEventAdd2(event));
-// };
+//--------------------------------------------------
+// GET EVENT
+//--------------------------------------------------
+export const requestGetEvent = event => dispatch => {
+  dispatch(requestGetEventThunk(event));
+};
+
+export function localGetEvent(event) {
+  return {
+    type: actionTypes.LOCAL_GET_EVENT,
+    event
+  };
+}
+
+//--------------------------------------------------
+// GET ALL EVENTs
+//--------------------------------------------------
+export const requestGetAllEvents = () => dispatch => {
+  dispatch(requestGetAllEventsThunk());
+};
+
+export function localGetAllEvents() {
+  return {
+    type: actionTypes.LOCAL_GET_ALL_EVENTS
+  };
+}
+
+//--------------------------------------------------
+// UPDATE EVENT
+//--------------------------------------------------
+export const requestUpdateEvent = event => dispatch => {
+  dispatch(requestUpdateEventThunk(event));
+};
+
+export function localUpdateEvent(event) {
+  return {
+    type: actionTypes.LOCAL_UPDATE_EVENT,
+    event
+  };
+}
+
+//--------------------------------------------------
+// DELETE EVENT
+//--------------------------------------------------
+export const requestDeleteEvent = event => dispatch => {
+  dispatch(requestDeleteEventThunk(event));
+};
+
+export function localDeleteEvent(event) {
+  return {
+    type: actionTypes.LOCAL_DELETE_EVENT,
+    event
+  };
+}
