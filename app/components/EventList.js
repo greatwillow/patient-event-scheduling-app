@@ -18,6 +18,7 @@ class EventList extends Component {
   _onPressRequestGetAllEvents = () => {
     this.props.requestGetAllEvents();
   };
+  _keyExtractor = (item, index) => item.id;
 
   render() {
     _onPressDisplayAddForm = () => {
@@ -32,8 +33,15 @@ class EventList extends Component {
         />
         <FlatList
           data={this.props.events.events}
+          keyExtractor={this._keyExtractor}
           renderItem={({ item }) => {
-            return <Text>{item.title}</Text>;
+            return (
+              <View style={styles.listItem}>
+                <Text>Event Title: {item.title}</Text>
+                <Text>Patient Name: {item.patientName}</Text>
+                <Text>Event Start Date: {item.title}</Text>
+              </View>
+            );
           }}
         />
 
@@ -52,6 +60,15 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     padding: 30,
     marginTop: 30
+  },
+  listItem: {
+    width: SCREEN_WIDTH / 6 * 5,
+    height: SCREEN_HEIGHT / 12,
+    borderWidth: 1,
+    borderColor: COLORS.darkGreen,
+    borderRadius: 10,
+    padding: 20,
+    margin: 10
   },
   addButton: {
     position: "absolute",
