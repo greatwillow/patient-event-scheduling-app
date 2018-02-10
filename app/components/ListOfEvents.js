@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity
 } from "react-native";
+import moment from "moment";
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../constants/dimensions";
 import { COLORS } from "../constants/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -24,14 +25,36 @@ class ListOfEvents extends Component {
     this.props.setModalVisibility(true);
   };
 
+  _determineEventsToShow = () => {
+    const selectedDate = this.props.selectedDate.selectedDate.format(
+      "YYYY-MM-DD"
+    );
+
+    const eventsToShow = this.props.events.events.filter(event => {
+      const eventStartDate = event.eventStartDate.substring(0, 10);
+      const momentizedEventStartDate = moment(eventStartDate);
+      const momentizedSelectedDate = moment(selectedDate);
+      //const eventEndDate = event.eventEndDate.substr(0, 10);
+      let showEvent = false;
+      if (momentizedEventStartDate.date() == momentizedSelectedDate.date()) {
+        showEvent = true;
+      }
+      return showEvent;
+    });
+    console.log("EVENTS TO SHOW ", eventsToShow);
+    return eventsToShow;
+  };
+
   render() {
+    const eventsToShow = this._determineEventsToShow();
+
     return (
       <View style={styles.eventListContainer}>
         <CustomFontText style={styles.containerTitleText}>
           Events for: {this.props.selectedDate.selectedDate.format("LL")}
         </CustomFontText>
         <FlatList
-          data={this.props.events.events}
+          data={eventsToShow}
           keyExtractor={this._keyExtractor}
           renderItem={({ item }) => {
             return <ListEventItem item={item} {...this.props} />;
@@ -70,8 +93,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 3,
     right: 5,
-    opacity: 0.8,
-    color: COLORS.lightGreen
+    opacity: 0.9
   }
 });
 

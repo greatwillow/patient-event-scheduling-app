@@ -78,7 +78,8 @@ class FormAddUpdateDeleteEvent extends Component {
           : this.props.selectedEvent.id,
       title: this.state.title,
       patientName: this.state.patientName,
-      duration: this.state.duration
+      duration: this.state.duration,
+      eventStartDate: this.props.selectedDate.selectedDate.format("YYYY-MM-DD")
     };
     this.props.setModalVisibility(false);
     if (this.props.modalUI.modalPurpose === "Add") {
@@ -143,9 +144,6 @@ class FormAddUpdateDeleteEvent extends Component {
         <View style={styles.formContainer}>
           <CustomFontText style={{ fontSize: 20, paddingBottom: 10 }}>
             {`${this.props.modalUI.modalPurpose} Event`}
-          </CustomFontText>
-          <CustomFontText style={{ fontSize: 20, paddingBottom: 10 }}>
-            {`${this.props.selectedEvent.id} ID`}
           </CustomFontText>
           <CustomFontText style={{ fontSize: 15, paddingBottom: 10 }}>
             For: {this.props.selectedDate.selectedDate.format("LL")}
