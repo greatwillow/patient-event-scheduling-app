@@ -25,7 +25,6 @@ class Calendar extends Component {
 
 const styles = StyleSheet.create({
   calendarContainer: {
-    height: SCREEN_HEIGHT / 2,
     width: SCREEN_WIDTH,
     backgroundColor: COLORS.white,
     padding: 10,

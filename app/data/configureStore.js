@@ -8,7 +8,7 @@ import appReducer from "./appReducer";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["selectedDate"]
+  blacklist: ["selectedDate", "modalUI"]
 };
 
 const persistedReducer = persistReducer(persistConfig, appReducer);

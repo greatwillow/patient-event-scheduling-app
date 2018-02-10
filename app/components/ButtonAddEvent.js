@@ -14,7 +14,7 @@ class AddEventButton extends Component {
         style={this.props.style}
         name="plus-circle"
         size={70}
-        color={COLORS.red}
+        color={COLORS.lightGreen}
         onPress={this._onPressDisplayAddForm}
       />
     );

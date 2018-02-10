@@ -13,11 +13,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ButtonAddEvent from "./ButtonAddEvent";
 import ModalGeneric from "./ModalGeneric";
 import ButtonGeneric from "./ButtonGeneric";
+import CustomFontText from "./CustomFontText";
 
 class EventList extends Component {
-  _onPressRequestGetAllEvents = () => {
+  componentDidMount = () => {
     this.props.requestGetAllEvents();
   };
+
   _keyExtractor = (item, index) => item.id;
 
   render() {
@@ -26,20 +28,24 @@ class EventList extends Component {
     };
     return (
       <View style={styles.eventListContainer}>
-        <ButtonGeneric
-          text="Get Events"
-          onPress={this._onPressRequestGetAllEvents}
-          {...this.props}
-        />
+        <CustomFontText style={styles.containerTitleText}>
+          Events for: {this.props.selectedDate.selectedDate.format("LL")}
+        </CustomFontText>
         <FlatList
           data={this.props.events.events}
           keyExtractor={this._keyExtractor}
           renderItem={({ item }) => {
             return (
               <View style={styles.listItem}>
-                <Text>Event Title: {item.title}</Text>
-                <Text>Patient Name: {item.patientName}</Text>
-                <Text>Event Start Date: {item.title}</Text>
+                <CustomFontText style={styles.listText}>
+                  Event Title: {item.title}
+                </CustomFontText>
+                <CustomFontText style={styles.listText}>
+                  Patient Name: {item.patientName}
+                </CustomFontText>
+                <CustomFontText style={styles.listText}>
+                  Event Start Date: {item.title}
+                </CustomFontText>
               </View>
             );
           }}
@@ -57,23 +63,35 @@ const styles = StyleSheet.create({
     flex: 1,
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT / 2,
-    backgroundColor: COLORS.white,
-    padding: 30,
-    marginTop: 30
+    alignItems: "center",
+    backgroundColor: COLORS.red,
+    paddingTop: 5
+  },
+  containerTitleText: {
+    color: "white",
+    fontSize: 22,
+    padding: 10
   },
   listItem: {
-    width: SCREEN_WIDTH / 6 * 5,
-    height: SCREEN_HEIGHT / 12,
-    borderWidth: 1,
-    borderColor: COLORS.darkGreen,
-    borderRadius: 10,
-    padding: 20,
-    margin: 10
+    width: SCREEN_WIDTH,
+    borderTopWidth: 2,
+    borderColor: COLORS.lightGreen,
+    backgroundColor: "rgba(255,255,255,0.8)",
+    padding: 5,
+    paddingLeft: 20,
+    marginTop: 5,
+    marginBottom: 5
+  },
+  listText: {
+    color: "black",
+    fontSize: 18,
+    padding: 4
   },
   addButton: {
     position: "absolute",
-    bottom: 20,
-    right: 20
+    bottom: 3,
+    right: 5,
+    opacity: 0.8
   }
 });
 

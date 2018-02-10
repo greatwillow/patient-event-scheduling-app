@@ -8,8 +8,7 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
-  TouchableHighlight
+  View
 } from "react-native";
 import { connect } from "react-redux";
 import * as actions from "../data/appActions";
@@ -31,7 +30,7 @@ class ModalStructure extends Component {
           visible={this.props.modalUI.modalVisibility}
           onRequestClose={this._onRequestClose}
         >
-          <TouchableHighlight
+          <TouchableOpacity
             onPressOut={this._onRequestClose}
             style={styles.outerContainer}
           >
@@ -40,7 +39,7 @@ class ModalStructure extends Component {
               <FormAddOrUpdateEvent {...this.props} />
             </TouchableWithoutFeedback>
             {/* </KeyboardAvoidingView> */}
-          </TouchableHighlight>
+          </TouchableOpacity>
         </Modal>
       </View>
     );
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
     paddingTop: SCREEN_HEIGHT / 12,
-    backgroundColor: "rgba(0, 0, 0, 0.8)"
+    backgroundColor: "rgba(255, 255, 255, 0.8)"
   },
   innerContainer: {
     flex: 1,
