@@ -5,10 +5,7 @@ import { COLORS } from "../constants/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 class ButtonAddUpdateDeleteEvent extends Component {
-  // _onPressDisplayForm = () => {
-  //   this.props.setModalVisibility(true);
-  // };
-
+  //GETTING ICON THAT CORRESPONDS WITH PURPOSE
   _getIconName = () => {
     let iconName;
     if (this.props.purpose == "Add") {

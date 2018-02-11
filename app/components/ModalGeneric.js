@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 import {
   Image,
-  KeyboardAvoidingView,
   Modal,
   StyleSheet,
   Text,
@@ -19,6 +18,7 @@ import { COLORS } from "../constants/colors";
 import FormAddUpdateDeleteEvent from "./FormAddUpdateDeleteEvent";
 
 class ModalStructure extends Component {
+  //BACK BUTTON CLOSES MODAL
   _onRequestClose = () => {
     this.props.setModalVisibility(false);
   };
@@ -34,11 +34,9 @@ class ModalStructure extends Component {
             onPressOut={this._onRequestClose}
             style={styles.outerContainer}
           >
-            {/* <KeyboardAvoidingView behavior="padding"> */}
             <TouchableWithoutFeedback style={styles.innerContainer}>
               <FormAddUpdateDeleteEvent {...this.props} />
             </TouchableWithoutFeedback>
-            {/* </KeyboardAvoidingView> */}
           </TouchableOpacity>
         </Modal>
       </View>

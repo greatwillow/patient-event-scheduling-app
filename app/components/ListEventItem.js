@@ -7,12 +7,14 @@ import ButtonAddUpdateDeleteEvent from "./ButtonAddUpdateDeleteEvent";
 import CustomFontText from "./CustomFontText";
 
 class ListEventItem extends Component {
+  //SHOW UPDATE MODAL
   _onPressDisplayUpdateModal = () => {
     this.props.setSelectedEvent(this.props.item);
     this.props.setModalPurpose("Update");
     this.props.setModalVisibility(true);
   };
 
+  //SHOW DELETE MODAL
   _onPressDisplayDeleteModal = () => {
     this.props.setSelectedEvent(this.props.item);
     this.props.setModalPurpose("Delete");
@@ -28,7 +30,10 @@ class ListEventItem extends Component {
           Patient Name: {this.props.item.patientName}
         </CustomFontText>
         <CustomFontText style={styles.listText}>
-          Event Start Date: {this.props.item.title}
+          Event Start Date: {this.props.item.eventStartDate.substring(0, 10)}
+        </CustomFontText>
+        <CustomFontText style={styles.listText}>
+          Event End Date: {this.props.item.eventEndDate.substring(0, 10)}
         </CustomFontText>
         <ButtonAddUpdateDeleteEvent
           {...this.props}
@@ -64,7 +69,7 @@ const styles = StyleSheet.create({
   },
   listText: {
     color: "black",
-    fontSize: 18,
+    fontSize: 15,
     padding: 4
   },
   updateButton: {

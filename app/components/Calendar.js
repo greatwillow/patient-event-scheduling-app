@@ -6,6 +6,7 @@ import { COLORS } from "../constants/colors";
 import CalendarPicker from "react-native-calendar-picker";
 
 class Calendar extends Component {
+  //CHANGING STATE SELECTED DATE BASED ON USER SELECTED DATE
   _onDateChange = date => {
     this.props.setSelectedDate(date);
   };

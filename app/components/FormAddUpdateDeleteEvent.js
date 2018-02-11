@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import { Text, TextInput, StyleSheet, View } from "react-native";
 import moment from "moment";
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../constants/dimensions";
 import { COLORS } from "../constants/colors";
 import { checkIfInteger } from "../utils/checkIfInteger";
-import TextInputSingleLine from "./TextInputSingleLine";
 import ButtonGeneric from "./ButtonGeneric";
 import CustomFontText from "./CustomFontText";
 
@@ -12,6 +11,7 @@ class FormAddUpdateDeleteEvent extends Component {
   constructor() {
     super();
     this.state = {
+      inputs: {},
       title: null,
       titleFieldTouched: false,
       titleFieldProper: true,
@@ -28,6 +28,16 @@ class FormAddUpdateDeleteEvent extends Component {
   }
 
   //--------------------------------------------------
+  // Directing UI to Focus on Next Text Field
+  //--------------------------------------------------
+
+  inputs = {};
+
+  focusNextField = id => {
+    this.inputs[id].focus();
+  };
+
+  //--------------------------------------------------
   // Send Async Request and Update Local State
   //--------------------------------------------------
 
@@ -37,16 +47,32 @@ class FormAddUpdateDeleteEvent extends Component {
         ? null
         : this.props.selectedEvent.id;
 
-    const eventEndDate = moment(this.props.selectedDate.selectedDate)
+    //CALIBRATING END DATE TO CORRESPOND WITH EXISTING EVENT WHEN UNPDATED
+    let calibratedEndDate;
+    if (this.props.modalUI.modalPurpose === "ADD") {
+      calibratedEndDate = this.props.selectedDate.selectedDate;
+    } else if (this.props.modalUI.modalPurpose === "UPDATE") {
+      calibratedEndDate = this.props.selectedEvent.eventEndDate;
+    }
+    let eventEndDate = moment(calibratedEndDate)
       .add(this.state.duration - 1, "days")
       .format("YYYY-MM-DD");
+
+    //CALIBRATING START DATE TO CORRESPOND WITH EXISTING EVENT WHEN UNPDATED
+    let calibratedStartDate;
+    if (this.props.modalUI.modalPurpose === "ADD") {
+      calibratedStartDate = this.props.selectedDate.selectedDate;
+    } else if (this.props.modalUI.modalPurpose === "UPDATE") {
+      calibratedStartDate = this.props.selectedEvent.eventEndDate;
+    }
+    let eventStartDate = moment(calibratedStartDate).format("YYYY-MM-DD");
 
     //FINAL EVENT OBJECT TO BE SENT
     const event = {
       id: id,
       title: this.state.title,
       patientName: this.state.patientName,
-      eventStartDate: this.props.selectedDate.selectedDate.format("YYYY-MM-DD"),
+      eventStartDate: eventStartDate, //this.props.selectedDate.selectedDate.format("YYYY-MM-DD"),
       eventEndDate: eventEndDate
     };
     this.props.setModalVisibility(false);
@@ -66,7 +92,7 @@ class FormAddUpdateDeleteEvent extends Component {
   // before firing off async action and state change
   //--------------------------------------------------
 
-  _onPressButton = () => {
+  _onSubmit = () => {
     if (this.props.modalUI.modalPurpose === "Delete") {
       this._triggerAddUpdateDelete();
     }
@@ -185,27 +211,87 @@ class FormAddUpdateDeleteEvent extends Component {
           <CustomFontText style={{ fontSize: 15, paddingBottom: 10 }}>
             For: {this.props.selectedDate.selectedDate.format("LL")}
           </CustomFontText>
-          <TextInputSingleLine
+          {/* ----------------------------INPUT FOR TITLE--------------------- */}
+          <TextInput
+            ref={input => {
+              this.inputs["one"] = input;
+            }}
+            style={[
+              styles.textInput,
+              this.state.titleFieldValid
+                ? { borderColor: "black", borderWidth: 1 }
+                : { borderColor: "red", borderWidth: 3 }
+            ]}
             placeholder={"Event Title (3 or more chars)"}
-            style={{ width: SCREEN_WIDTH / 6 * 4 }}
+            placeholderTextColor={this.state.titleFieldValid ? "grey" : "red"}
             onChangeText={this._validifyTitleInput}
-            valid={this.state.titleFieldValid}
+            onSubmitEditing={() => {
+              this.focusNextField("two");
+            }}
+            blurOnSubmit={false}
+            returnKeyType={"next"}
+            underlineColorAndroid={"rgba(0,0,0,0)"}
+            autoCapitalize="words"
+            autoCorrect={false}
+            clearButtonMode="while-editing"
+            maxLength={50}
           />
-          <TextInputSingleLine
+          {/* ----------------------------INPUT FOR NAME--------------------- */}
+          <TextInput
+            ref={input => {
+              this.inputs["two"] = input;
+            }}
+            style={[
+              styles.textInput,
+              this.state.nameFieldValid
+                ? { borderColor: "black", borderWidth: 1 }
+                : { borderColor: "red", borderWidth: 3 }
+            ]}
             placeholder={"Patient Name (3 or more chars)"}
-            style={{ width: SCREEN_WIDTH / 6 * 4 }}
+            placeholderTextColor={this.state.nameFieldValid ? "grey" : "red"}
             onChangeText={this._validifyNameInput}
+            onSubmitEditing={() => {
+              this.focusNextField("three");
+            }}
             valid={this.state.nameFieldValid}
+            blurOnSubmit={false}
+            returnKeyType={"next"}
+            underlineColorAndroid={"rgba(0,0,0,0)"}
+            autoCapitalize="words"
+            autoCorrect={false}
+            clearButtonMode="while-editing"
+            maxLength={50}
           />
-          <TextInputSingleLine
+          {/* ----------------------------INPUT FOR DURATION--------------------- */}
+          <TextInput
+            ref={input => {
+              this.inputs["three"] = input;
+            }}
+            style={[
+              styles.textInput,
+              this.state.durationFieldValid
+                ? { borderColor: "black", borderWidth: 1 }
+                : { borderColor: "red", borderWidth: 3 }
+            ]}
             placeholder={"Event Duration (between 1 and 14)"}
-            style={{ width: SCREEN_WIDTH / 6 * 4 }}
+            placeholderTextColor={
+              this.state.durationFieldValid ? "grey" : "red"
+            }
             onChangeText={this._validifyDurationInput}
-            valid={this.state.durationFieldValid}
+            onSubmitEditing={this._onSubmit}
+            blurOnSubmit={true}
+            returnKeyType={"done"}
+            underlineColorAndroid={"rgba(0,0,0,0)"}
+            autoCapitalize="words"
+            autoCorrect={false}
+            clearButtonMode="while-editing"
+            maxLength={50}
+            keyboardType={"numeric"}
           />
+          {/* ----------------------------SUBMIT BUTTON--------------------- */}
           <ButtonGeneric
             text={`${this.props.modalUI.modalPurpose} Event`}
-            onPress={this._onPressButton}
+            onPress={this._onSubmit}
           />
         </View>
       );
@@ -218,7 +304,7 @@ class FormAddUpdateDeleteEvent extends Component {
           </CustomFontText>
           <ButtonGeneric
             text={`${this.props.modalUI.modalPurpose} Event`}
-            onPress={this._onPressButton}
+            onPress={this._onSubmit}
           />
         </View>
       );
@@ -235,6 +321,17 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.lightGreen,
     borderRadius: 10,
     padding: 30
+  },
+  textInput: {
+    width: SCREEN_WIDTH / 6 * 4,
+    backgroundColor: "white",
+    marginBottom: 5,
+    marginTop: 5,
+    padding: 5,
+    paddingLeft: 10,
+    borderRadius: 5,
+    height: 40,
+    alignSelf: "center"
   }
 });
 
