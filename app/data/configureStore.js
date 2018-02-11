@@ -25,6 +25,7 @@ let persistor = persistStore(store);
 //purge() Is used to purge the Redux store between app sessions
 //if purge() is ommitted, the state of the app will be persisted
 //through sessions
-persistor.purge();
+
+//persistor.purge();
 
 export { store, persistor };
