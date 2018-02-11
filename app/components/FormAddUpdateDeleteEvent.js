@@ -299,8 +299,15 @@ class FormAddUpdateDeleteEvent extends Component {
       //WHAT TO SHOW IN CASE OF 'DELETE'
       return (
         <View style={styles.formContainer}>
-          <CustomFontText style={{ fontSize: 20, paddingBottom: 10 }}>
-            {`${this.props.selectedEvent.id} ID`}
+          <CustomFontText
+            style={{
+              textAlign: "center",
+              fontSize: 20,
+              paddingBottom: 20,
+              padding: 5
+            }}
+          >
+            Are you sure you would like to delete this event?
           </CustomFontText>
           <ButtonGeneric
             text={`${this.props.modalUI.modalPurpose} Event`}

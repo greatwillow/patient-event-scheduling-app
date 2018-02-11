@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, TouchableHighlight, View } from "react-native";
+import { StyleSheet, TouchableHighlight, View } from "react-native";
 
 import { SCREEN_WIDTH } from "../constants/dimensions";
+import CustomFontText from "./CustomFontText";
+import { COLORS } from "../constants/colors";
 
 class ButtonGeneric extends Component {
   render() {
@@ -12,7 +14,9 @@ class ButtonGeneric extends Component {
         onPress={this.props.onPress}
       >
         <View>
-          <Text>{this.props.text ? this.props.text : "Text Needed!"} </Text>
+          <CustomFontText style={styles.buttonText}>
+            {this.props.text ? this.props.text : "Text Needed!"}{" "}
+          </CustomFontText>
         </View>
       </TouchableHighlight>
     );
@@ -28,6 +32,7 @@ var styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
+    backgroundColor: COLORS.darkGreen,
     marginTop: 10,
     padding: 5
   },
@@ -35,8 +40,8 @@ var styles = StyleSheet.create({
     flex: 1,
     alignSelf: "center",
     justifyContent: "center",
-    fontSize: 20,
-    color: "black"
+    fontSize: 18,
+    color: "white"
   }
 });
 

@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
     paddingTop: SCREEN_HEIGHT / 12,
-    backgroundColor: "rgba(255, 255, 255, 0.8)"
+    backgroundColor: "rgba(255, 255, 255, 0.5)"
   },
   innerContainer: {
     flex: 1,

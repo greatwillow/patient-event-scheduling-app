@@ -9,6 +9,7 @@ class CustomFontText extends Component {
       fontLoaded: false
     };
   }
+  //NEED TO LOAD FONT ASYNCRONOUSLY
   async componentDidMount() {
     await Font.loadAsync({
       "titillium-regular": require("../assets/fonts/TitilliumWeb-Regular.ttf")
