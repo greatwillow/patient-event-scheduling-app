@@ -11,7 +11,8 @@ const requestAddEventThunk = event => dispatch => {
     title: event.title,
     patientName: event.patientName,
     duration: event.duration,
-    eventStartDate: event.eventStartDate
+    eventStartDate: event.eventStartDate,
+    eventEndDate: event.eventEndDate
   };
 
   const POST_EVENT_URI = BASE_URI;
@@ -119,7 +120,8 @@ const requestUpdateEventThunk = event => dispatch => {
     title: event.title,
     patientName: event.patientName,
     duration: event.duration,
-    eventStartDate: event.eventStartDate
+    eventStartDate: event.eventStartDate,
+    eventEndDate: event.eventEndDate
   };
 
   const UPDATE_EVENT_URI = `${BASE_URI}${event.id}`;

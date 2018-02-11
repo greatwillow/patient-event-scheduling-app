@@ -18,25 +18,45 @@ import CustomFontText from "./CustomFontText";
 import ListEventItem from "./ListEventItem";
 
 class ListOfEvents extends Component {
+  //--------------------------------------------------
+  // Setting ID as the key for FlatList
+  //--------------------------------------------------
+
   _keyExtractor = (item, index) => item.id;
+
+  //--------------------------------------------------
+  // Modal Display Setup
+  //--------------------------------------------------
 
   _onPressDisplayAddModal = () => {
     this.props.setModalPurpose("Add");
     this.props.setModalVisibility(true);
   };
 
+  //--------------------------------------------------
+  // Which events to show based on the selected date
+  //--------------------------------------------------
+
   _determineEventsToShow = () => {
     const selectedDate = this.props.selectedDate.selectedDate.format(
       "YYYY-MM-DD"
     );
 
+    //FILTER OUT EVENTS THAT ARE ONLY ON SELECTED DATE
     const eventsToShow = this.props.events.events.filter(event => {
       const eventStartDate = event.eventStartDate.substring(0, 10);
+      const eventEndDate = event.eventEndDate.substring(0, 10);
       const momentizedEventStartDate = moment(eventStartDate);
+      const momentizedEventEndDate = moment(eventEndDate);
       const momentizedSelectedDate = moment(selectedDate);
-      //const eventEndDate = event.eventEndDate.substr(0, 10);
+
+      //DEFAULT CONDITION
       let showEvent = false;
-      if (momentizedEventStartDate.date() == momentizedSelectedDate.date()) {
+      //CHECKING IF SELECTED DATE IS BETWEEN START AND END DATES
+      if (
+        momentizedSelectedDate.date() >= momentizedEventStartDate.date() &&
+        momentizedSelectedDate.date() <= momentizedEventEndDate.date()
+      ) {
         showEvent = true;
       }
       return showEvent;

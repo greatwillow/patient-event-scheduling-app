@@ -7,10 +7,6 @@ import CalendarPicker from "react-native-calendar-picker";
 
 class Calendar extends Component {
   _onDateChange = date => {
-    console.log("PROPS ", this.props);
-    console.log("DATE IS ", date.get("date"));
-    console.log("Year IS ", date.get("year"));
-    console.log("Month IS ", date.get("month"));
     this.props.setSelectedDate(date);
   };
 
