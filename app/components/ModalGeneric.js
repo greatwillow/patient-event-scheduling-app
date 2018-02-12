@@ -34,7 +34,7 @@ class ModalStructure extends Component {
             onPressOut={this._onRequestClose}
             style={styles.outerContainer}
           >
-            <TouchableWithoutFeedback style={styles.innerContainer}>
+            <TouchableWithoutFeedback onPress={() => {}}>
               <FormAddUpdateDeleteEvent {...this.props} />
             </TouchableWithoutFeedback>
           </TouchableOpacity>
@@ -52,17 +52,6 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT,
     paddingTop: SCREEN_HEIGHT / 12,
     backgroundColor: "rgba(255, 255, 255, 0.5)"
-  },
-  innerContainer: {
-    flex: 1,
-    borderRadius: 10,
-    margin: 150,
-    alignItems: "center",
-    justifyContent: "center",
-    width: SCREEN_WIDTH / 6 * 5,
-    height: SCREEN_HEIGHT / 3,
-    padding: 15,
-    backgroundColor: COLORS.red
   }
 });
 
