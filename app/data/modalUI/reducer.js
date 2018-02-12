@@ -2,7 +2,8 @@ import * as actionTypes from "../../constants/actionTypes";
 
 const initialState = {
   modalPurpose: "Add",
-  modalVisibility: false
+  formModalVisibility: false,
+  loadingModalVisibility: false
 };
 
 const modalUI = (state = initialState, action) => {
@@ -12,10 +13,15 @@ const modalUI = (state = initialState, action) => {
         ...state,
         modalPurpose: action.modalPurpose
       };
-    case actionTypes.SET_MODAL_VISIBILITY:
+    case actionTypes.SET_FORM_MODAL_VISIBILITY:
       return {
         ...state,
-        modalVisibility: action.modalVisibility
+        formModalVisibility: action.formModalVisibility
+      };
+    case actionTypes.SET_LOADING_MODAL_VISIBILITY:
+      return {
+        ...state,
+        loadingModalVisibility: action.loadingModalVisibility
       };
     default:
       return state;

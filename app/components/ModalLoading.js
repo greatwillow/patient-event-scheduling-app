@@ -1,14 +1,6 @@
 import React, { Component } from "react";
 
-import {
-  Image,
-  Modal,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View
-} from "react-native";
+import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import * as actions from "../data/appActions";
 
@@ -17,24 +9,18 @@ import { COLORS } from "../constants/colors";
 
 import FormAddUpdateDeleteEvent from "./FormAddUpdateDeleteEvent";
 
-class ModalGeneric extends Component {
-  //BACK BUTTON CLOSES MODAL
-  _onRequestClose = () => {
-    this.props.setFormModalVisibility(false);
-  };
-
+class ModalLoading extends Component {
   render() {
     return (
       <View>
         <Modal
-          visible={this.props.modalUI.formModalVisibility}
+          visible={this.props.modalUI.loadingModalVisibility}
           onRequestClose={this._onRequestClose}
         >
-          <TouchableOpacity
-            onPressOut={this._onRequestClose}
-            style={styles.outerContainer}
-          >
-            <FormAddUpdateDeleteEvent {...this.props} />
+          <TouchableOpacity style={styles.outerContainer}>
+            <View>
+              <Text>Loading</Text>
+            </View>
           </TouchableOpacity>
         </Modal>
       </View>
@@ -53,4 +39,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ModalGeneric;
+export default ModalLoading;

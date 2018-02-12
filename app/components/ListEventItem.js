@@ -11,14 +11,14 @@ class ListEventItem extends Component {
   _onPressDisplayUpdateModal = () => {
     this.props.setSelectedEvent(this.props.item);
     this.props.setModalPurpose("Update");
-    this.props.setModalVisibility(true);
+    this.props.setFormModalVisibility(true);
   };
 
   //SHOW DELETE MODAL
   _onPressDisplayDeleteModal = () => {
     this.props.setSelectedEvent(this.props.item);
     this.props.setModalPurpose("Delete");
-    this.props.setModalVisibility(true);
+    this.props.setFormModalVisibility(true);
   };
   render() {
     return (

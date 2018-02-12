@@ -104,6 +104,7 @@ const requestGetAllEventsThunk = event => dispatch => {
     })
     .then(data => {
       console.log("Heres the get data ", data);
+      data.map(e => dispatch(actions.localAddEvent(e)));
     })
     .catch(err => {
       console.log("CATCH ERROR IS ", err);

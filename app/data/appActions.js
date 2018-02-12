@@ -10,7 +10,11 @@ import {
   localDeleteEvent
 } from "./events/actions";
 
-import { setModalPurpose, setModalVisibility } from "./modalUI/actions";
+import {
+  setModalPurpose,
+  setFormModalVisibility,
+  setLoadingModalVisibility
+} from "./modalUI/actions";
 
 import { setSelectedDate } from "./selectedDate/actions";
 
@@ -29,7 +33,8 @@ export {
   localDeleteEvent,
   //Modal
   setModalPurpose,
-  setModalVisibility,
+  setFormModalVisibility,
+  setLoadingModalVisibility,
   //Selected Date
   setSelectedDate,
   //Selected Event

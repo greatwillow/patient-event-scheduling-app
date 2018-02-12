@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 class AddEventButton extends Component {
   _onPressDisplayAddForm = () => {
-    this.props.setModalVisibility(true);
+    this.props.setFormModalVisibility(true);
   };
   render() {
     return (

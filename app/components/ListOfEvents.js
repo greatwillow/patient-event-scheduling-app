@@ -16,6 +16,7 @@ import ModalGeneric from "./ModalGeneric";
 import ButtonGeneric from "./ButtonGeneric";
 import CustomFontText from "./CustomFontText";
 import ListEventItem from "./ListEventItem";
+import ModalLoading from "../components/ModalLoading";
 
 class ListOfEvents extends Component {
   //--------------------------------------------------
@@ -30,7 +31,7 @@ class ListOfEvents extends Component {
 
   _onPressDisplayAddModal = () => {
     this.props.setModalPurpose("Add");
-    this.props.setModalVisibility(true);
+    this.props.setFormModalVisibility(true);
   };
 
   //--------------------------------------------------
@@ -82,6 +83,8 @@ class ListOfEvents extends Component {
         />
 
         <ModalGeneric {...this.props} />
+        <ModalLoading {...this.props} />
+
         <ButtonAddUpdateDeleteEvent
           style={styles.addButton}
           purpose={"Add"}

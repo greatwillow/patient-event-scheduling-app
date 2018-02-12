@@ -8,13 +8,19 @@ import { connect } from "react-redux";
 
 import Calendar from "../components/Calendar";
 import ListOfEvents from "../components/ListOfEvents";
+import ModalLoading from "../components/ModalLoading";
 
 class Root extends Component {
+  componentDidMount = () => {
+    this.props.requestGetAllEvents();
+  };
+
   render() {
     return (
       <View style={styles.mainContainer}>
         <Calendar {...this.props} />
         <ListOfEvents {...this.props} />
+        <ModalLoading {...this.props} />
       </View>
     );
   }
@@ -48,8 +54,10 @@ const mapDispatchToProps = dispatch => ({
   localDeleteEvent: event => dispatch(actions.localDeleteEvent(event)),
   setModalPurpose: modalPurpose =>
     dispatch(actions.setModalPurpose(modalPurpose)),
-  setModalVisibility: modalVisibility =>
-    dispatch(actions.setModalVisibility(modalVisibility)),
+  setFormModalVisibility: formModalVisibility =>
+    dispatch(actions.setFormModalVisibility(formModalVisibility)),
+  setLoadingModalVisibility: loadingModalVisibility =>
+    dispatch(actions.setLoadingModalVisibility(loadingModalVisibility)),
   setSelectedDate: selectedDate =>
     dispatch(actions.setSelectedDate(selectedDate)),
   setSelectedEvent: selectedEvent =>
