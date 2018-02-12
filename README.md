@@ -5,7 +5,7 @@ To find out more, please visit [here](https://github.com/react-community/create-
 
 ## Overview
 
-This is a simple events scheduling app designed to allow for patient based events to be created for specific date periods. Upon creating or updating an event, the app queries the user for the event duration and appropriately displays events for the dates they were assigned to.
+This is a patient events scheduling app made with react-native for ios and android devices.  This app is designed to allow for patient based events to be created for specific date periods. Upon creating or updating an event, the app queries the user for the event duration and appropriately displays events for the dates they were assigned to.
 
 To see a simple video demonstration of the app visit [here](https://gfycat.com/PerfumedFarGallowaycow?speed=2)
 
@@ -21,7 +21,7 @@ scan the provided QR Code with Expo app. Note that the app may not function if t
 
 ## Technical Notes
 
-This app was built alongside an external node.js backend application that can be seen [here](https://github.com/VernL/p-calendar-api/)
+This app was built alongside an external node.js backend application api that can be seen [here](https://github.com/VernL/p-calendar-api/)
 
 This app was created with offline state persistence in mind using redux-persist. The normal configuration allows for state to be persisted through sessions. This can be modified, however, by uncommenting persistor.purge(); inside app/data/configureStore.js.
 

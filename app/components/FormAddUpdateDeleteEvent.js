@@ -67,20 +67,24 @@ class FormAddUpdateDeleteEvent extends Component {
     let calibratedStartDate;
     let calibratedEndDate;
     if (this.props.modalUI.modalPurpose == "Add") {
-      calibratedStartDate = moment(this.props.selectedDate.selectedDate);
+      calibratedStartDate = this.props.selectedDate.selectedDate;
       calibratedEndDate = moment(calibratedStartDate).add(
         this.state.duration - 1,
         "days"
       );
     } else if (this.props.modalUI.modalPurpose == "Update") {
-      calibratedStartDate = moment(this.props.selectedEvent.eventStartDate);
+      calibratedStartDate = this.props.selectedEvent.eventStartDate;
       calibratedEndDate = moment(calibratedStartDate).add(
         this.state.duration - 1,
         "days"
       );
     }
-    let eventStartDate = moment(calibratedStartDate).format("YYYY-MM-DD");
-    let eventEndDate = moment(calibratedEndDate).format("YYYY-MM-DD");
+
+    //FINAL START AND END DATES
+    let eventStartDate = moment
+      .parseZone(calibratedStartDate)
+      .format("YYYY-MM-DD");
+    let eventEndDate = moment.parseZone(calibratedEndDate).format("YYYY-MM-DD");
 
     //FINAL EVENT OBJECT TO BE SENT
     const event = {
