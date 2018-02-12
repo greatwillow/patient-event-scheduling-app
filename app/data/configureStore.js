@@ -26,6 +26,6 @@ let persistor = persistStore(store);
 //if purge() is ommitted, the state of the app will be persisted
 //through sessions
 
-//persistor.purge();
+persistor.purge();
 
 export { store, persistor };

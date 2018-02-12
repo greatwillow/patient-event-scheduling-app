@@ -20,12 +20,28 @@ class FormAddUpdateDeleteEvent extends Component {
       nameFieldTouched: false,
       nameFieldProper: true,
       nameFieldValid: true,
+      durationString: "",
       duration: 0,
       durationFieldTouched: false,
       durationFieldProper: true,
       durationFieldValid: true
     };
   }
+
+  //--------------------------------------------------
+  // Mounting
+  //--------------------------------------------------
+
+  componentWillMount = () => {
+    if (this.props.modalUI.modalPurpose == "Update") {
+      this.setState({
+        title: this.props.selectedEvent.title,
+        patientName: this.props.selectedEvent.patientName,
+        durationString: String(this.props.selectedEvent.duration),
+        duration: this.props.selectedEvent.duration
+      });
+    }
+  };
 
   //--------------------------------------------------
   // Directing UI to Focus on Next Text Field
@@ -63,17 +79,9 @@ class FormAddUpdateDeleteEvent extends Component {
         "days"
       );
     }
-
     let eventStartDate = moment(calibratedStartDate).format("YYYY-MM-DD");
     let eventEndDate = moment(calibratedEndDate).format("YYYY-MM-DD");
 
-    console.log("MODAL PURPOSE IS ", this.props.modalUI.modalPurpose);
-    console.log("Selected  date ", this.props.selectedDate.selectedDate);
-
-    console.log("Calib start ", calibratedStartDate);
-    console.log("Calib end ", calibratedEndDate);
-    console.log("Ev Start ", eventStartDate);
-    console.log("Ev End ", eventEndDate);
     //FINAL EVENT OBJECT TO BE SENT
     const event = {
       id: id,
@@ -100,47 +108,75 @@ class FormAddUpdateDeleteEvent extends Component {
   //--------------------------------------------------
 
   _onSubmit = () => {
-    if (this.props.modalUI.modalPurpose === "Delete") {
-      this._triggerAddUpdateDelete();
-    }
-    if (
-      this.state.titleFieldTouched &&
-      this.state.titleFieldProper &&
-      this.state.nameFieldTouched &&
-      this.state.nameFieldProper &&
-      this.state.durationFieldTouched &&
-      this.state.durationFieldProper
-    ) {
-      this._triggerAddUpdateDelete();
-    } else {
-      if (!this.state.titleFieldTouched || !this.state.titleFieldProper) {
-        this.setState({
-          titleFieldValid: false
-        });
-      } else {
-        this.setState({
-          titleFieldValid: true
-        });
+    preTriggerValidation = new Promise((res, rej) => {
+      if (this.props.modalUI.modalPurpose === "Delete") {
+        this._triggerAddUpdateDelete();
+      } else if (this.props.modalUI.modalPurpose === "Update") {
+        if (this.state.titleFieldTouched === false) {
+          this.setState({
+            titleFieldTouched: true
+          });
+        }
+        if (this.state.nameFieldTouched === false) {
+          this.setState({
+            nameFieldTouched: true
+          });
+        }
+        if (this.state.durationFieldTouched === false) {
+          this.setState({
+            durationFieldTouched: true
+          });
+        }
       }
-      if (!this.state.nameFieldTouched || !this.state.nameFieldProper) {
-        this.setState({
-          nameFieldValid: false
-        });
-      } else {
-        this.setState({
-          nameFieldValid: true
-        });
-      }
-      if (!this.state.durationFieldTouched || !this.state.durationFieldProper) {
-        this.setState({
-          durationFieldValid: false
-        });
-      } else {
-        this.setState({
-          durationFieldValid: true
-        });
-      }
-    }
+      return res();
+    });
+    preTriggerValidation
+      .then(res => {
+        if (
+          this.state.titleFieldTouched &&
+          this.state.titleFieldProper &&
+          this.state.nameFieldTouched &&
+          this.state.nameFieldProper &&
+          this.state.durationFieldTouched &&
+          this.state.durationFieldProper
+        ) {
+          this._triggerAddUpdateDelete();
+        } else {
+          if (!this.state.titleFieldTouched || !this.state.titleFieldProper) {
+            this.setState({
+              titleFieldValid: false
+            });
+          } else {
+            this.setState({
+              titleFieldValid: true
+            });
+          }
+          if (!this.state.nameFieldTouched || !this.state.nameFieldProper) {
+            this.setState({
+              nameFieldValid: false
+            });
+          } else {
+            this.setState({
+              nameFieldValid: true
+            });
+          }
+          if (
+            !this.state.durationFieldTouched ||
+            !this.state.durationFieldProper
+          ) {
+            this.setState({
+              durationFieldValid: false
+            });
+          } else {
+            this.setState({
+              durationFieldValid: true
+            });
+          }
+        }
+      })
+      .catch(err =>
+        console.error("Error in preTrigger validation Promise ", err)
+      );
   };
 
   //--------------------------------------------------
@@ -229,6 +265,7 @@ class FormAddUpdateDeleteEvent extends Component {
                 ? { borderColor: "black", borderWidth: 1 }
                 : { borderColor: "red", borderWidth: 3 }
             ]}
+            defaultValue={this.state.title}
             placeholder={"Event Title (3 or more chars)"}
             placeholderTextColor={this.state.titleFieldValid ? "grey" : "red"}
             onChangeText={this._validifyTitleInput}
@@ -254,6 +291,7 @@ class FormAddUpdateDeleteEvent extends Component {
                 ? { borderColor: "black", borderWidth: 1 }
                 : { borderColor: "red", borderWidth: 3 }
             ]}
+            defaultValue={this.state.patientName}
             placeholder={"Patient Name (3 or more chars)"}
             placeholderTextColor={this.state.nameFieldValid ? "grey" : "red"}
             onChangeText={this._validifyNameInput}
@@ -280,6 +318,7 @@ class FormAddUpdateDeleteEvent extends Component {
                 ? { borderColor: "black", borderWidth: 1 }
                 : { borderColor: "red", borderWidth: 3 }
             ]}
+            defaultValue={this.state.durationString}
             placeholder={"Event Duration (between 1 and 14)"}
             placeholderTextColor={
               this.state.durationFieldValid ? "grey" : "red"

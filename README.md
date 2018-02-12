@@ -17,6 +17,8 @@ run `npm install` to install the dependencies.
 
 run `npm start` to run the application.
 
+scan the provided QR Code with Expo app. Note that the app may not function if the computer and mobile device are not on the same local network.
+
 ## Technical Notes
 
 This app was built alongside an external node.js backend application that can be seen [here](https://github.com/VernL/p-calendar-api/)
