@@ -47,32 +47,39 @@ class FormAddUpdateDeleteEvent extends Component {
         ? null
         : this.props.selectedEvent.id;
 
-    //CALIBRATING END DATE TO CORRESPOND WITH EXISTING EVENT WHEN UNPDATED
-    let calibratedEndDate;
-    if (this.props.modalUI.modalPurpose === "ADD") {
-      calibratedEndDate = this.props.selectedDate.selectedDate;
-    } else if (this.props.modalUI.modalPurpose === "UPDATE") {
-      calibratedEndDate = this.props.selectedEvent.eventEndDate;
-    }
-    let eventEndDate = moment(calibratedEndDate)
-      .add(this.state.duration - 1, "days")
-      .format("YYYY-MM-DD");
-
-    //CALIBRATING START DATE TO CORRESPOND WITH EXISTING EVENT WHEN UNPDATED
+    //CALIBRATING END DATE TO CORRESPOND WITH EXISTING EVENT WHEN UPDATED
     let calibratedStartDate;
-    if (this.props.modalUI.modalPurpose === "ADD") {
-      calibratedStartDate = this.props.selectedDate.selectedDate;
-    } else if (this.props.modalUI.modalPurpose === "UPDATE") {
-      calibratedStartDate = this.props.selectedEvent.eventEndDate;
+    let calibratedEndDate;
+    if (this.props.modalUI.modalPurpose == "Add") {
+      calibratedStartDate = moment(this.props.selectedDate.selectedDate);
+      calibratedEndDate = moment(calibratedStartDate).add(
+        this.state.duration - 1,
+        "days"
+      );
+    } else if (this.props.modalUI.modalPurpose == "Update") {
+      calibratedStartDate = moment(this.props.selectedEvent.eventStartDate);
+      calibratedEndDate = moment(calibratedStartDate).add(
+        this.state.duration - 1,
+        "days"
+      );
     }
-    let eventStartDate = moment(calibratedStartDate).format("YYYY-MM-DD");
 
+    let eventStartDate = moment(calibratedStartDate).format("YYYY-MM-DD");
+    let eventEndDate = moment(calibratedEndDate).format("YYYY-MM-DD");
+
+    console.log("MODAL PURPOSE IS ", this.props.modalUI.modalPurpose);
+    console.log("Selected  date ", this.props.selectedDate.selectedDate);
+
+    console.log("Calib start ", calibratedStartDate);
+    console.log("Calib end ", calibratedEndDate);
+    console.log("Ev Start ", eventStartDate);
+    console.log("Ev End ", eventEndDate);
     //FINAL EVENT OBJECT TO BE SENT
     const event = {
       id: id,
       title: this.state.title,
       patientName: this.state.patientName,
-      eventStartDate: eventStartDate, //this.props.selectedDate.selectedDate.format("YYYY-MM-DD"),
+      eventStartDate: eventStartDate,
       eventEndDate: eventEndDate
     };
     this.props.setModalVisibility(false);

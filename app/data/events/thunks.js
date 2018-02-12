@@ -1,6 +1,6 @@
 import * as actions from "../appActions";
 
-const BASE_URI = "https://warm-plateau-57879.herokuapp.com/";
+const BASE_URI = "https://warm-plateau-57879.herokuapp.com/"; //"http://localhost:3000"
 
 //--------------------------------------------------
 // ADD EVENT
@@ -136,7 +136,6 @@ const requestUpdateEventThunk = event => dispatch => {
   })
     .then(res => {
       if (res.status == 200) {
-        console.log("SUCCESSFULL 200 RESPONSE ", res);
         return res.json();
       } else {
         throw new Error("Something wrong with the server!");
