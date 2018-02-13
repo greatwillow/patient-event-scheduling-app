@@ -23,7 +23,10 @@ class ListOfEvents extends Component {
   constructor() {
     super();
     this.state = {
-      headerLeftWidth: SCREEN_WIDTH / 6 * 5,
+      headerLeftWidth: SCREEN_WIDTH / 8 * 6,
+      headerRightWidth: 0,
+      headerLeftSpacerWidth: SCREEN_WIDTH / 8,
+      headerRightSpacerWidth: 0,
       headerLeftText: "",
       headerRightText: "",
       sliderText: "<",
@@ -53,19 +56,25 @@ class ListOfEvents extends Component {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         this.setState({
           headerLeftWidth: 0,
+          headerRightWidth: SCREEN_WIDTH / 8 * 6,
+          headerLeftSpacerWidth: 0,
+          headerRightSpacerWidth: SCREEN_WIDTH / 8,
           headerLeftText: "",
           headerRightText: "Events for All Dates",
-          sliderText: "<",
+          sliderText: ">",
           headerBackgroundColor: COLORS.red
         });
       } else if (nextProps.listUI.listPurpose === "ShowSelectedDate") {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         this.setState({
-          headerLeftWidth: SCREEN_WIDTH / 6 * 5,
+          headerLeftWidth: SCREEN_WIDTH / 8 * 6,
+          headerRightWidth: 0,
+          headerLeftSpacerWidth: SCREEN_WIDTH / 8,
+          headerRightSpacerWidth: 0,
           headerLeftText:
             "Events for: " + nextProps.selectedDate.selectedDate.format("LL"),
           headerRightText: "",
-          sliderText: ">",
+          sliderText: "<",
           headerBackgroundColor: COLORS.red
         });
       }
@@ -137,6 +146,7 @@ class ListOfEvents extends Component {
     return (
       <View style={styles.eventListContainer}>
         <View style={styles.animatedHeader}>
+          <View style={{ width: this.state.headerLeftSpacerWidth }} />
           <View
             style={[styles.headerLeft, { width: this.state.headerLeftWidth }]}
           >
@@ -156,17 +166,14 @@ class ListOfEvents extends Component {
             </CustomFontText>
           </TouchableOpacity>
           <View
-            style={[
-              styles.headerRight,
-              {
-                width:
-                  SCREEN_WIDTH - this.state.headerLeftWidth - SCREEN_WIDTH / 6
-              }
-            ]}
+            style={[styles.headerRight, { width: this.state.headerRightWidth }]}
           >
             <CustomFontText style={styles.headerRightText}>
               {this.state.headerRightText}
             </CustomFontText>
+          </View>
+          <View style={{ width: this.state.headerRightSpacerWidth }}>
+            <Text>.</Text>
           </View>
         </View>
         <FlatList
@@ -206,43 +213,41 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    height: 40,
+    height: 60,
     width: SCREEN_WIDTH
   },
   headerLeft: {
     justifyContent: "center",
     alignItems: "center",
-    width: SCREEN_WIDTH / 6 * 4,
     backgroundColor: COLORS.red
   },
   headerRight: {
     justifyContent: "center",
     alignItems: "center",
-    width: SCREEN_WIDTH / 6 * 2,
     backgroundColor: COLORS.red
   },
   slider: {
     justifyContent: "center",
     alignItems: "center",
-    width: SCREEN_WIDTH / 6
+    width: SCREEN_WIDTH / 8
   },
   headerLeftText: {
     textAlign: "center",
-    color: "white",
+    color: COLORS.white,
     fontSize: 20,
     padding: 10
   },
   headerRightText: {
     textAlign: "center",
-    color: COLORS.darkGreen,
+    color: COLORS.white,
     fontSize: 20,
     padding: 10
   },
   sliderText: {
+    justifyContent: "center",
     textAlign: "center",
-    color: COLORS.darkGreen,
-    fontSize: 35,
-    padding: 10
+    color: COLORS.white,
+    fontSize: 40
   },
   addButton: {
     position: "absolute",
