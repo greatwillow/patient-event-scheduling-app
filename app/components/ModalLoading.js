@@ -27,7 +27,7 @@ class ModalLoading extends Component {
         <Modal
           visible={this.props.modalUI.loadingModalVisibility}
           transparent={true}
-          onRequestClose={this._onRequestClose()}
+          onRequestClose={this._onRequestClose}
         >
           <TouchableOpacity style={styles.outerContainer}>
             <View style={styles.innerContainer}>
