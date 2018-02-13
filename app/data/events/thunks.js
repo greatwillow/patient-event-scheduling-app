@@ -36,6 +36,7 @@ const requestAddEventThunk = event => dispatch => {
     .then(data => {
       console.log("DATA IS ", data);
       dispatch(actions.localAddEvent(data));
+      dispatch(actions.setLoadingModalVisibility(false));
     })
     .catch(err => {
       console.log("CATCH ERROR IS ", err);
@@ -72,6 +73,7 @@ const requestGetEventThunk = event => dispatch => {
     })
     .then(data => {
       console.log("Heres the get data ", data);
+      dispatch(actions.setLoadingModalVisibility(false));
     })
     .catch(err => {
       console.log("CATCH ERROR IS ", err);
@@ -105,6 +107,7 @@ const requestGetAllEventsThunk = event => dispatch => {
     .then(data => {
       console.log("Heres the get data ", data);
       data.map(e => dispatch(actions.localAddEvent(e)));
+      dispatch(actions.setLoadingModalVisibility(false));
     })
     .catch(err => {
       console.log("CATCH ERROR IS ", err);
@@ -145,6 +148,7 @@ const requestUpdateEventThunk = event => dispatch => {
     .then(data => {
       dispatch(actions.localDeleteEvent(data));
       dispatch(actions.localAddEvent(data));
+      dispatch(actions.setLoadingModalVisibility(false));
     })
     .catch(err => {
       console.log("CATCH ERROR IS ", err);
@@ -177,6 +181,7 @@ const requestDeleteEventThunk = event => dispatch => {
     })
     .then(data => {
       dispatch(actions.localDeleteEvent(event));
+      dispatch(actions.setLoadingModalVisibility(false));
     })
     .catch(err => {
       console.log("CATCH ERROR IS ", err);

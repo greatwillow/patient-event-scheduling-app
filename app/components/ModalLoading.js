@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 
-import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 import { connect } from "react-redux";
 import * as actions from "../data/appActions";
 
@@ -15,11 +23,16 @@ class ModalLoading extends Component {
       <View>
         <Modal
           visible={this.props.modalUI.loadingModalVisibility}
+          transparent={true}
           onRequestClose={this._onRequestClose}
         >
           <TouchableOpacity style={styles.outerContainer}>
-            <View>
-              <Text>Loading</Text>
+            <View style={styles.innerContainer}>
+              <ActivityIndicator
+                animating={true}
+                size="large"
+                color={COLORS.red}
+              />
             </View>
           </TouchableOpacity>
         </Modal>
@@ -32,10 +45,18 @@ const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
     alignItems: "center",
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
-    paddingTop: SCREEN_HEIGHT / 12,
-    backgroundColor: "rgba(255, 255, 255, 0.5)"
+    flexDirection: "column",
+    justifyContent: "space-around",
+    backgroundColor: "rgba(255,255,255,0.1)"
+  },
+  innerContainer: {
+    backgroundColor: "#FFFFFF",
+    height: 100,
+    width: 100,
+    borderRadius: 10,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-around"
   }
 });
 

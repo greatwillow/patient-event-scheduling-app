@@ -105,14 +105,7 @@ class FormAddUpdateDeleteEvent extends Component {
     //ROUTING DIFFERENT REQUESTS
     if (this.props.modalUI.modalPurpose === "Add") {
       this.props.setLoadingModalVisibility(true);
-      awaitingRequest = new Promise((res, rej) => {
-        return res(this.props.requestAddEvent(event));
-      });
-      awaitingRequest
-        .then(() => {
-          this.props.setLoadingModalVisibility(false);
-        })
-        .catch(err => consol.log("awaitingRequest func error ", err));
+      this.props.requestAddEvent(event);
     } else if (this.props.modalUI.modalPurpose === "Update") {
       this.props.requestUpdateEvent(event);
     } else if (this.props.modalUI.modalPurpose === "Delete") {

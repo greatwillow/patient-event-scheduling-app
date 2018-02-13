@@ -12,6 +12,7 @@ import ModalLoading from "../components/ModalLoading";
 
 class Root extends Component {
   componentDidMount = () => {
+    this.props.setLoadingModalVisibility(true);
     this.props.requestGetAllEvents();
   };
 
