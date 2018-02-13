@@ -62,7 +62,7 @@ class ListOfEvents extends Component {
           headerLeftText: "",
           headerRightText: "Events for All Dates",
           sliderText: ">",
-          headerBackgroundColor: COLORS.red
+          headerBackgroundColor: COLORS.white
         });
       } else if (nextProps.listUI.listPurpose === "ShowSelectedDate") {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -144,11 +144,27 @@ class ListOfEvents extends Component {
     const eventsToShow = this._determineEventsToShow();
 
     return (
-      <View style={styles.eventListContainer}>
-        <View style={styles.animatedHeader}>
-          <View style={{ width: this.state.headerLeftSpacerWidth }} />
+      <View>
+        <View
+          style={[
+            styles.animatedHeader,
+            { backgroundColor: this.state.headerBackgroundColor }
+          ]}
+        >
           <View
-            style={[styles.headerLeft, { width: this.state.headerLeftWidth }]}
+            style={{
+              width: this.state.headerLeftSpacerWidth,
+              backgroundColor: this.state.headerBackgroundColor
+            }}
+          />
+          <View
+            style={[
+              styles.headerLeft,
+              {
+                width: this.state.headerLeftWidth,
+                backgroundColor: this.state.headerBackgroundColor
+              }
+            ]}
           >
             <CustomFontText style={styles.headerLeftText}>
               {this.state.headerLeftText}
@@ -166,7 +182,13 @@ class ListOfEvents extends Component {
             </CustomFontText>
           </TouchableOpacity>
           <View
-            style={[styles.headerRight, { width: this.state.headerRightWidth }]}
+            style={[
+              styles.headerRight,
+              {
+                width: this.state.headerRightWidth,
+                backgroundColor: this.state.headerBackgroundColor
+              }
+            ]}
           >
             <CustomFontText style={styles.headerRightText}>
               {this.state.headerRightText}
@@ -176,25 +198,27 @@ class ListOfEvents extends Component {
             <Text>.</Text>
           </View>
         </View>
-        <FlatList
-          data={eventsToShow}
-          keyExtractor={this._keyExtractor}
-          renderItem={({ item }) => {
-            return <ListEventItem item={item} {...this.props} />;
-          }}
-        />
+        <View style={styles.eventListContainer}>
+          <FlatList
+            data={eventsToShow}
+            keyExtractor={this._keyExtractor}
+            renderItem={({ item }) => {
+              return <ListEventItem item={item} {...this.props} />;
+            }}
+          />
 
-        <ModalGeneric {...this.props} />
-        <ModalLoading {...this.props} />
+          <ModalGeneric {...this.props} />
+          <ModalLoading {...this.props} />
 
-        <ButtonAddUpdateDeleteEvent
-          style={styles.addButton}
-          purpose={"Add"}
-          size={70}
-          color={COLORS.lightGreen}
-          onPress={this._onPressDisplayAddModal}
-          {...this.props}
-        />
+          <ButtonAddUpdateDeleteEvent
+            style={styles.addButton}
+            purpose={"Add"}
+            size={70}
+            color={COLORS.lightGreen}
+            onPress={this._onPressDisplayAddModal}
+            {...this.props}
+          />
+        </View>
       </View>
     );
   }
@@ -202,7 +226,6 @@ class ListOfEvents extends Component {
 
 const styles = StyleSheet.create({
   eventListContainer: {
-    flex: 1,
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT / 2,
     alignItems: "center",
@@ -218,13 +241,13 @@ const styles = StyleSheet.create({
   },
   headerLeft: {
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: COLORS.red
+    alignItems: "center"
+    //backgroundColor: COLORS.red
   },
   headerRight: {
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: COLORS.red
+    alignItems: "center"
+    //backgroundColor: COLORS.red
   },
   slider: {
     justifyContent: "center",
@@ -233,20 +256,20 @@ const styles = StyleSheet.create({
   },
   headerLeftText: {
     textAlign: "center",
-    color: COLORS.white,
+    color: COLORS.darkGreen,
     fontSize: 20,
     padding: 10
   },
   headerRightText: {
     textAlign: "center",
-    color: COLORS.white,
+    color: COLORS.darkGreen,
     fontSize: 20,
     padding: 10
   },
   sliderText: {
     justifyContent: "center",
     textAlign: "center",
-    color: COLORS.white,
+    color: COLORS.darkGreen,
     fontSize: 40
   },
   addButton: {

@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    backgroundColor: COLORS.red
+    backgroundColor: COLORS.white
   }
 });
 

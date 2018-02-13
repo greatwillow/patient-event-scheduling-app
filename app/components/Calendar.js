@@ -20,23 +20,18 @@ class Calendar extends Component {
       });
     } else if (this.props.listUI.listPurpose === "ShowSelectedDate") {
       this.setState({
-        calendarHeight: SCREEN_HEIGHT / 7 * 3
+        calendarHeight: SCREEN_HEIGHT / 2
       });
     }
   };
   componentWillReceiveProps = nextProps => {
-    console.log("====================================");
-    console.log("RECEIVEING PROPS ");
-    console.log("====================================");
     if (this.props.listUI.listPurpose !== nextProps.listUI.listPurpose) {
       if (nextProps.listUI.listPurpose === "ShowAllDates") {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        this.setState({ calendarHeight: 1 }, () =>
-          console.log("SCALE CHANGED")
-        );
+        this.setState({ calendarHeight: 1 });
       } else if (nextProps.listUI.listPurpose === "ShowSelectedDate") {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        this.setState({ calendarHeight: SCREEN_HEIGHT / 7 * 3 });
+        this.setState({ calendarHeight: SCREEN_HEIGHT / 2 });
       }
     }
   };
@@ -60,7 +55,7 @@ class Calendar extends Component {
 const styles = StyleSheet.create({
   calendarContainer: {
     width: SCREEN_WIDTH,
-    backgroundColor: COLORS.red,
+    backgroundColor: COLORS.white,
     padding: 10,
     paddingBottom: 10,
     marginTop: 30
