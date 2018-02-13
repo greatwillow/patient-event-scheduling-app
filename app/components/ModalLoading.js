@@ -18,13 +18,16 @@ import { COLORS } from "../constants/colors";
 import FormAddUpdateDeleteEvent from "./FormAddUpdateDeleteEvent";
 
 class ModalLoading extends Component {
+  _onRequestClose = () => {
+    this.props.setLoadingModalVisibility(true);
+  };
   render() {
     return (
       <View>
         <Modal
           visible={this.props.modalUI.loadingModalVisibility}
           transparent={true}
-          onRequestClose={this._onRequestClose}
+          onRequestClose={this._onRequestClose()}
         >
           <TouchableOpacity style={styles.outerContainer}>
             <View style={styles.innerContainer}>

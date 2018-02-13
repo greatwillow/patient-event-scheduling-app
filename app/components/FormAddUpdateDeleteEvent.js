@@ -38,7 +38,7 @@ class FormAddUpdateDeleteEvent extends Component {
   // Mounting
   //--------------------------------------------------
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     if (this.props.modalUI.modalPurpose == "Update") {
       this.setState({
         title: this.props.selectedEvent.title,

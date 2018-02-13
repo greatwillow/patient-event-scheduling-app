@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View } from "react-native";
-import { COLORS } from "../constants/colors";
 import PropTypes from "prop-types";
+import { COLORS } from "../constants/colors";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
