@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View } from "react-native";
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../constants/dimensions";
+import PropTypes from "prop-types";
 import { COLORS } from "../constants/colors";
 import * as actions from "../data/appActions";
 
@@ -26,6 +27,31 @@ class Root extends Component {
     );
   }
 }
+
+Root.propTypes = {
+  modalUI: PropTypes.shape({
+    modalPurpose: PropTypes.string,
+    formModalVisibility: PropTypes.bool,
+    loadingModalVisibility: PropTypes.bool
+  }),
+  selectedDate: PropTypes.shape({
+    selectedDate: PropTypes.object
+  }),
+  selectedEvent: PropTypes.shape({
+    selectedEvent: PropTypes.func
+  }),
+  events:
+    PropTypes.object ||
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        title: PropTypes.string,
+        patientName: PropTypes.string,
+        eventStartDate: PropTypes.func,
+        eventEndDate: PropTypes.func
+      })
+    )
+};
 
 const styles = StyleSheet.create({
   mainContainer: {

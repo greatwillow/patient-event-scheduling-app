@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, TouchableHighlight, View } from "react-native";
+import PropTypes from "prop-types";
 
 import { SCREEN_WIDTH } from "../constants/dimensions";
 import CustomFontText from "./CustomFontText";
@@ -22,6 +23,10 @@ class ButtonGeneric extends Component {
     );
   }
 }
+
+ButtonGeneric.propTypes = {
+  text: PropTypes.string
+};
 
 var styles = StyleSheet.create({
   button: {

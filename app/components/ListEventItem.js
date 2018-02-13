@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Text, StyleSheet, View } from "react-native";
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../constants/dimensions";
 import { COLORS } from "../constants/colors";
+import PropTypes from "prop-types";
 
 import ButtonAddUpdateDeleteEvent from "./ButtonAddUpdateDeleteEvent";
 import CustomFontText from "./CustomFontText";
@@ -55,6 +56,15 @@ class ListEventItem extends Component {
     );
   }
 }
+
+ListEventItem.propTypes = {
+  item: PropTypes.shape({
+    title: PropTypes.string,
+    patientName: PropTypes.string,
+    eventStartDate: PropTypes.string,
+    eventEndDate: PropTypes.string
+  })
+};
 
 const styles = StyleSheet.create({
   listItem: {

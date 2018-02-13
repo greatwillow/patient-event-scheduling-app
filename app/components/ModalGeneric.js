@@ -28,6 +28,7 @@ class ModalGeneric extends Component {
       <View>
         <Modal
           visible={this.props.modalUI.formModalVisibility}
+          transparent={true}
           onRequestClose={this._onRequestClose}
         >
           <TouchableOpacity
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
     paddingTop: SCREEN_HEIGHT / 12,
-    backgroundColor: "rgba(255, 255, 255, 0.5)"
+    backgroundColor: "rgba(0, 0, 0, 0.6)"
   }
 });
 

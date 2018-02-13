@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View } from "react-native";
 import { COLORS } from "../constants/colors";
+import PropTypes from "prop-types";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -30,5 +31,11 @@ class ButtonAddUpdateDeleteEvent extends Component {
     );
   }
 }
+
+ButtonAddUpdateDeleteEvent.propTypes = {
+  size: PropTypes.number.isRequired,
+  color: PropTypes.string,
+  onPress: PropTypes.func
+};
 
 export default ButtonAddUpdateDeleteEvent;
