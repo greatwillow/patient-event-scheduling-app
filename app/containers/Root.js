@@ -63,10 +63,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
+  events: state.events,
+  listUI: state.listUI,
   modalUI: state.modalUI,
   selectedDate: state.selectedDate,
-  selectedEvent: state.selectedEvent,
-  events: state.events
+  selectedEvent: state.selectedEvent
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -79,6 +80,7 @@ const mapDispatchToProps = dispatch => ({
   requestUpdateEvent: event => dispatch(actions.requestUpdateEvent(event)),
   requestDeleteEvent: event => dispatch(actions.requestDeleteEvent(event)),
   localDeleteEvent: event => dispatch(actions.localDeleteEvent(event)),
+  setListPurpose: listPurpose => dispatch(actions.setListPurpose(listPurpose)),
   setModalPurpose: modalPurpose =>
     dispatch(actions.setModalPurpose(modalPurpose)),
   setFormModalVisibility: formModalVisibility =>

@@ -10,6 +10,8 @@ import {
   localDeleteEvent
 } from "./events/actions";
 
+import { setListPurpose } from "./listUI/actions";
+
 import {
   setModalPurpose,
   setFormModalVisibility,
@@ -31,6 +33,8 @@ export {
   requestUpdateEvent,
   requestDeleteEvent,
   localDeleteEvent,
+  //List
+  setListPurpose,
   //Modal
   setModalPurpose,
   setFormModalVisibility,

@@ -14,7 +14,7 @@ class Calendar extends Component {
   render() {
     return (
       <View style={styles.calendarContainer}>
-        <CalendarPicker onDateChange={this._onDateChange} />
+        <CalendarPicker scaleFactor={375} onDateChange={this._onDateChange} />
       </View>
     );
   }
@@ -23,7 +23,7 @@ class Calendar extends Component {
 const styles = StyleSheet.create({
   calendarContainer: {
     width: SCREEN_WIDTH,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.red,
     padding: 10,
     paddingBottom: 10,
     marginTop: 30
