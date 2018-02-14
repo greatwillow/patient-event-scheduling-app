@@ -15,10 +15,6 @@ class ListHeader extends Component {
   constructor() {
     super();
     this.state = {
-      headerLeftWidth: SCREEN_WIDTH / 8 * 6,
-      headerRightWidth: 0,
-      headerLeftSpacerWidth: 0,
-      headerRightSpacerWidth: 0,
       headerText: ""
     };
   }
@@ -26,12 +22,11 @@ class ListHeader extends Component {
   componentDidMount = () => {
     if (this.props.listUI.listPurpose === "ShowAllDates") {
       this.setState({
-        headerText: ""
+        headerText: "All Events"
       });
     } else if (this.props.listUI.listPurpose === "ShowSelectedDate") {
       this.setState({
-        headerText:
-          "Events for: " + this.props.selectedDate.selectedDate.format("LL")
+        headerText: "" + this.props.selectedDate.selectedDate.format("LL")
       });
     }
   };
@@ -40,17 +35,12 @@ class ListHeader extends Component {
       if (nextProps.listUI.listPurpose === "ShowAllDates") {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         this.setState({
-          headerLeftSpacerWidth: 0,
-          headerRightSpacerWidth: 0,
-          headerText: "Events For All Dates"
+          headerText: "All Events"
         });
       } else if (nextProps.listUI.listPurpose === "ShowSelectedDate") {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         this.setState({
-          headerLeftSpacerWidth: 0,
-          headerRightSpacerWidth: 0,
-          headerText:
-            "Events for: " + nextProps.selectedDate.selectedDate.format("LL")
+          headerText: "" + nextProps.selectedDate.selectedDate.format("LL")
         });
       }
     }
@@ -74,11 +64,15 @@ class ListHeader extends Component {
         style={styles.animatedHeader}
         onPress={this._onPressHeader}
       >
-        <View style={{ width: this.state.headerLeftSpacerWidth }} />
+        <View style={styles.headerLeftSpacer} />
         <CustomFontText style={styles.headerText}>
           {this.state.headerText}
         </CustomFontText>
-        <View style={{ width: this.state.headerRightSpacerWidth }} />
+        <View style={styles.headerRightSpacer}>
+          <CustomFontText style={styles.headerRightSpacerText}>
+            {this.state.headerRightSpacerText}
+          </CustomFontText>
+        </View>
       </TouchableOpacity>
     );
   }
@@ -99,6 +93,26 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: 22,
     paddingTop: 10
+  },
+  headerLeftSpacer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 20
+  },
+  headerLeftSpacerText: {
+    textAlign: "center",
+    color: COLORS.white,
+    fontSize: 25
+  },
+  headerRightSpacer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 20
+  },
+  headerRightSpacerText: {
+    textAlign: "center",
+    color: COLORS.white,
+    fontSize: 25
   }
 });
 

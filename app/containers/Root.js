@@ -8,6 +8,7 @@ import * as actions from "../data/appActions";
 
 import { connect } from "react-redux";
 
+import ButtonAddUpdateDeleteEvent from "../components/ButtonAddUpdateDeleteEvent";
 import Calendar from "../components/Calendar";
 import ListHeader from "../components/ListHeader";
 import ListOfEvents from "../components/ListOfEvents";
@@ -19,14 +20,34 @@ class Root extends Component {
     this.props.requestGetAllEvents();
   };
 
+  //--------------------------------------------------
+  // Modal Display Setup
+  //--------------------------------------------------
+
+  _onPressDisplayAddModal = () => {
+    this.props.setModalPurpose("Add");
+    this.props.setFormModalVisibility(true);
+  };
+
   render() {
     return (
       <View style={styles.mainContainer}>
         <View style={styles.statusBar} />
         <Calendar {...this.props} />
-        <ListHeader {...this.props} />
-        <ListOfEvents {...this.props} />
-        <ModalLoading {...this.props} />
+        <View style={{ flex: 1 }}>
+          <ListHeader {...this.props} />
+          <ListOfEvents {...this.props} />
+          <ModalLoading {...this.props} />
+
+        </View>
+        <ButtonAddUpdateDeleteEvent
+            style={styles.addButton}
+            purpose={"Add"}
+            size={70}
+            color={COLORS.lightGreen}
+            onPress={this._onPressDisplayAddModal}
+            {...this.props}
+          />
       </View>
     );
   }
@@ -67,6 +88,12 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT + Constants.statusBarHeight,
     backgroundColor: COLORS.white
+  },
+  addButton: {
+    position: "absolute",
+    bottom: 3,
+    right: 5,
+    opacity: 0.9
   }
 });
 

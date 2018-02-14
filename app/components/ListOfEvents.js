@@ -9,60 +9,54 @@ import {
 import moment from "moment";
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../constants/dimensions";
 import { COLORS } from "../constants/colors";
-
-import ButtonAddUpdateDeleteEvent from "./ButtonAddUpdateDeleteEvent";
 import ModalGeneric from "./ModalGeneric";
 import ListEventItem from "./ListEventItem";
 import ModalLoading from "../components/ModalLoading";
 
 class ListOfEvents extends Component {
-  constructor() {
-    super();
-    this.state = {
-      listHeight: SCREEN_HEIGHT / 12 * 5
-    };
-  }
-  componentDidMount = () => {
-    if (this.props.listUI.listPurpose === "ShowAllDates") {
-      this.setState({
-        listHeight: SCREEN_HEIGHT / 12 * 11
-      });
-    } else if (this.props.listUI.listPurpose === "ShowSelectedDate") {
-      this.setState({
-        listHeight: SCREEN_HEIGHT / 12 * 5
-      });
-    }
-  };
-  componentWillReceiveProps = nextProps => {
-    if (this.props.listUI.listPurpose !== nextProps.listUI.listPurpose) {
-      if (nextProps.listUI.listPurpose === "ShowAllDates") {
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        this.setState({
-          listHeight: SCREEN_HEIGHT / 12 * 11
-        });
-      } else if (nextProps.listUI.listPurpose === "ShowSelectedDate") {
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        this.setState({
-          listHeight: SCREEN_HEIGHT / 12 * 5
-        });
-      }
-    }
-  };
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     listHeight: SCREEN_HEIGHT / 12 * 5,
+  //     listFlex: 5
+  //   };
+  // }
+  // componentDidMount = () => {
+  //   if (this.props.listUI.listPurpose === "ShowAllDates") {
+  //     this.setState({
+  //       listHeight: SCREEN_HEIGHT / 12 * 11,
+  //       listFlex: 5
+  //     });
+  //   } else if (this.props.listUI.listPurpose === "ShowSelectedDate") {
+  //     this.setState({
+  //       listHeight: SCREEN_HEIGHT / 12 * 5,
+  //       listFlex: 11
+  //     });
+  //   }
+  // };
+  // componentWillReceiveProps = nextProps => {
+  //   if (this.props.listUI.listPurpose !== nextProps.listUI.listPurpose) {
+  //     if (nextProps.listUI.listPurpose === "ShowAllDates") {
+  //       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  //       this.setState({
+  //         listHeight: SCREEN_HEIGHT / 12 * 11,
+  //         listFlex: 11
+  //       });
+  //     } else if (nextProps.listUI.listPurpose === "ShowSelectedDate") {
+  //       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  //       this.setState({
+  //         listHeight: SCREEN_HEIGHT / 12 * 5,
+  //         listFlex: 11
+  //       });
+  //     }
+  //   }
+  // };
 
   //--------------------------------------------------
   // Setting ID as the key for FlatList
   //--------------------------------------------------
 
   _keyExtractor = (item, index) => item.id;
-
-  //--------------------------------------------------
-  // Modal Display Setup
-  //--------------------------------------------------
-
-  _onPressDisplayAddModal = () => {
-    this.props.setModalPurpose("Add");
-    this.props.setFormModalVisibility(true);
-  };
 
   //--------------------------------------------------
   // Which events to show based on the selected date
@@ -105,28 +99,16 @@ class ListOfEvents extends Component {
     }
 
     return (
-      <View>
-        <View
-          style={[styles.eventListContainer, { height: this.state.listHeight }]}
-        >
-          <FlatList
-            data={eventsToShow}
-            keyExtractor={this._keyExtractor}
-            renderItem={({ item }) => {
-              return <ListEventItem item={item} {...this.props} />;
-            }}
-          />
-          <ModalGeneric {...this.props} />
-          <ModalLoading {...this.props} />
-          <ButtonAddUpdateDeleteEvent
-            style={styles.addButton}
-            purpose={"Add"}
-            size={70}
-            color={COLORS.lightGreen}
-            onPress={this._onPressDisplayAddModal}
-            {...this.props}
-          />
-        </View>
+      <View style={styles.eventListContainer}>
+        <FlatList
+          data={eventsToShow}
+          keyExtractor={this._keyExtractor}
+          renderItem={({ item }) => {
+            return <ListEventItem item={item} {...this.props} />;
+          }}
+        />
+        <ModalGeneric {...this.props} />
+        <ModalLoading {...this.props} />
       </View>
     );
   }
@@ -134,18 +116,11 @@ class ListOfEvents extends Component {
 
 const styles = StyleSheet.create({
   eventListContainer: {
-    flex: 0,
+    flex: 1,
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT / 12 * 5,
     alignItems: "center",
     backgroundColor: COLORS.red,
     paddingTop: 5
-  },
-  addButton: {
-    position: "absolute",
-    bottom: 3,
-    right: 5,
-    opacity: 0.9
   }
 });
 

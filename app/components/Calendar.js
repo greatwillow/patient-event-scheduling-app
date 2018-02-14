@@ -10,9 +10,11 @@ class Calendar extends Component {
     super();
     this.state = {
       calendarHeight: SCREEN_HEIGHT / 12 * 7,
+      calendarFlex: 7,
       calendarContainerHeight: SCREEN_HEIGHT / 12 * 6,
       calendarContainerPadding: 15,
-      calendarContainerOpacity: 1
+      calendarContainerOpacity: 1,
+      calendarContainerFlex: 0.01
     };
   }
 
@@ -20,16 +22,20 @@ class Calendar extends Component {
     if (this.props.listUI.listPurpose === "ShowAllDates") {
       this.setState({
         calendarHeight: 0,
+        calendarFlex: 0,
         calendarWidth: 0,
         calendarContainerHeight: 0,
         calendarContainerPadding: 0,
-        calendarContainerOpacity: 0
+        calendarContainerOpacity: 0,
+        calendarContainerFlex: 0
       });
     } else if (this.props.listUI.listPurpose === "ShowSelectedDate") {
       this.setState({
         calendarHeight: SCREEN_HEIGHT / 12 * 7,
+        calendarFlex: 7,
         calendarContainerHeight: SCREEN_HEIGHT / 12 * 6,
-        calendarContainerPadding: 15
+        calendarContainerPadding: 15,
+        calendarContainerFlex: 6
       });
     }
   };
@@ -37,16 +43,24 @@ class Calendar extends Component {
     if (this.props.listUI.listPurpose !== nextProps.listUI.listPurpose) {
       if (nextProps.listUI.listPurpose === "ShowAllDates") {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        this.setState({ calendarHeight: 0 });
-        this.setState({ calendarContainerHeight: 0 });
-        this.setState({ calendarContainerPadding: 0 });
-        this.setState({ calendarContainerOpacity: 0 });
+        this.setState({
+          calendarHeight: 0,
+          calendarFlex: 0,
+          calendarContainerHeight: 0,
+          calendarContainerPadding: 0,
+          calendarContainerOpacity: 0,
+          calendarContainerFlex: 0
+        });
       } else if (nextProps.listUI.listPurpose === "ShowSelectedDate") {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        this.setState({ calendarHeight: SCREEN_HEIGHT / 12 * 7 });
-        this.setState({ calendarContainerHeight: SCREEN_HEIGHT / 12 * 6 });
-        this.setState({ calendarContainerPadding: 15 });
-        this.setState({ calendarContainerOpacity: SCREEN_WIDTH });
+        this.setState({
+          calendarHeight: SCREEN_HEIGHT / 12 * 7,
+          calendarFlex: 7,
+          calendarContainerHeight: SCREEN_HEIGHT / 12 * 6,
+          calendarContainerPadding: 15,
+          calendarContainerOpacity: 1,
+          calendarContainerFlex: 6
+        });
       }
     }
   };
@@ -63,7 +77,8 @@ class Calendar extends Component {
           {
             height: this.state.calendarContainerHeight,
             padding: this.state.calendarContainerPadding,
-            opacity: this.state.calendarContainerOpacity
+            opacity: this.state.calendarContainerOpacity,
+            flex: 0
           }
         ]}
       >
