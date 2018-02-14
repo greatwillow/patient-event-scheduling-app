@@ -4,18 +4,14 @@ import {
   LayoutAnimation,
   Text,
   StyleSheet,
-  View,
-  TouchableOpacity
+  View
 } from "react-native";
 import moment from "moment";
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../constants/dimensions";
 import { COLORS } from "../constants/colors";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import ButtonAddUpdateDeleteEvent from "./ButtonAddUpdateDeleteEvent";
 import ModalGeneric from "./ModalGeneric";
-import ButtonGeneric from "./ButtonGeneric";
-import CustomFontText from "./CustomFontText";
 import ListEventItem from "./ListEventItem";
 import ModalLoading from "../components/ModalLoading";
 
@@ -23,30 +19,17 @@ class ListOfEvents extends Component {
   constructor() {
     super();
     this.state = {
-      headerLeftWidth: SCREEN_WIDTH / 8 * 6,
-      headerRightWidth: 0,
-      headerLeftSpacerWidth: SCREEN_WIDTH / 8,
-      headerRightSpacerWidth: 0,
-      headerLeftText: "",
-      headerRightText: "",
-      sliderText: "<",
-      headerBackgroundColor: COLORS.red
+      listHeight: SCREEN_HEIGHT / 12 * 5
     };
   }
-
   componentDidMount = () => {
     if (this.props.listUI.listPurpose === "ShowAllDates") {
       this.setState({
-        headerLeftText: "",
-        headerRightText: "Events for All Dates",
-        sliderText: ">"
+        listHeight: SCREEN_HEIGHT / 12 * 11
       });
     } else if (this.props.listUI.listPurpose === "ShowSelectedDate") {
       this.setState({
-        headerLeftText:
-          "Events for: " + this.props.selectedDate.selectedDate.format("LL"),
-        headerRightText: "",
-        sliderText: "<"
+        listHeight: SCREEN_HEIGHT / 12 * 5
       });
     }
   };
@@ -55,27 +38,12 @@ class ListOfEvents extends Component {
       if (nextProps.listUI.listPurpose === "ShowAllDates") {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         this.setState({
-          headerLeftWidth: 0,
-          headerRightWidth: SCREEN_WIDTH / 8 * 6,
-          headerLeftSpacerWidth: 0,
-          headerRightSpacerWidth: SCREEN_WIDTH / 8,
-          headerLeftText: "",
-          headerRightText: "Events for All Dates",
-          sliderText: ">",
-          headerBackgroundColor: COLORS.white
+          listHeight: SCREEN_HEIGHT / 12 * 11
         });
       } else if (nextProps.listUI.listPurpose === "ShowSelectedDate") {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         this.setState({
-          headerLeftWidth: SCREEN_WIDTH / 8 * 6,
-          headerRightWidth: 0,
-          headerLeftSpacerWidth: SCREEN_WIDTH / 8,
-          headerRightSpacerWidth: 0,
-          headerLeftText:
-            "Events for: " + nextProps.selectedDate.selectedDate.format("LL"),
-          headerRightText: "",
-          sliderText: "<",
-          headerBackgroundColor: COLORS.red
+          listHeight: SCREEN_HEIGHT / 12 * 5
         });
       }
     }
@@ -128,77 +96,19 @@ class ListOfEvents extends Component {
     return eventsToShow;
   };
 
-  //--------------------------------------------------
-  // Slider Handling
-  //--------------------------------------------------
-
-  _onPressSlider = () => {
-    if (this.props.listUI.listPurpose === "ShowSelectedDate") {
-      this.props.setListPurpose("ShowAllDates");
-    } else if (this.props.listUI.listPurpose === "ShowAllDates") {
-      this.props.setListPurpose("ShowSelectedDate");
-    }
-  };
-
   render() {
-    const eventsToShow = this._determineEventsToShow();
+    let eventsToShow;
+    if (this.props.listUI.listPurpose === "ShowAllEvents") {
+      eventsToShow = this.props.events.events;
+    } else {
+      eventsToShow = this._determineEventsToShow();
+    }
 
     return (
       <View>
         <View
-          style={[
-            styles.animatedHeader,
-            { backgroundColor: this.state.headerBackgroundColor }
-          ]}
+          style={[styles.eventListContainer, { height: this.state.listHeight }]}
         >
-          <View
-            style={{
-              width: this.state.headerLeftSpacerWidth,
-              backgroundColor: this.state.headerBackgroundColor
-            }}
-          />
-          <View
-            style={[
-              styles.headerLeft,
-              {
-                width: this.state.headerLeftWidth,
-                backgroundColor: this.state.headerBackgroundColor
-              }
-            ]}
-          >
-            <CustomFontText style={styles.headerLeftText}>
-              {this.state.headerLeftText}
-            </CustomFontText>
-          </View>
-          <TouchableOpacity
-            style={[
-              styles.slider,
-              { backgroundColor: this.state.headerBackgroundColor }
-            ]}
-            onPress={this._onPressSlider}
-          >
-            <CustomFontText style={styles.sliderText}>
-              {this.state.sliderText}
-            </CustomFontText>
-          </TouchableOpacity>
-          <View
-            style={[
-              styles.headerRight,
-              {
-                width: this.state.headerRightWidth,
-                backgroundColor: this.state.headerBackgroundColor
-              }
-            ]}
-          >
-            <CustomFontText style={styles.headerRightText}>
-              {this.state.headerRightText}
-            </CustomFontText>
-          </View>
-          <View style={{ width: this.state.headerRightSpacerWidth }}>
-            <Text>.</Text>
-          </View>
-        </View>
-        <View style={styles.eventListContainer}>
           <FlatList
             data={eventsToShow}
             keyExtractor={this._keyExtractor}
@@ -206,10 +116,8 @@ class ListOfEvents extends Component {
               return <ListEventItem item={item} {...this.props} />;
             }}
           />
-
           <ModalGeneric {...this.props} />
           <ModalLoading {...this.props} />
-
           <ButtonAddUpdateDeleteEvent
             style={styles.addButton}
             purpose={"Add"}
@@ -226,51 +134,12 @@ class ListOfEvents extends Component {
 
 const styles = StyleSheet.create({
   eventListContainer: {
+    flex: 0,
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT / 2,
+    height: SCREEN_HEIGHT / 12 * 5,
     alignItems: "center",
     backgroundColor: COLORS.red,
     paddingTop: 5
-  },
-  animatedHeader: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    height: 60,
-    width: SCREEN_WIDTH
-  },
-  headerLeft: {
-    justifyContent: "center",
-    alignItems: "center"
-    //backgroundColor: COLORS.red
-  },
-  headerRight: {
-    justifyContent: "center",
-    alignItems: "center"
-    //backgroundColor: COLORS.red
-  },
-  slider: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: SCREEN_WIDTH / 8
-  },
-  headerLeftText: {
-    textAlign: "center",
-    color: COLORS.darkGreen,
-    fontSize: 20,
-    padding: 10
-  },
-  headerRightText: {
-    textAlign: "center",
-    color: COLORS.darkGreen,
-    fontSize: 20,
-    padding: 10
-  },
-  sliderText: {
-    justifyContent: "center",
-    textAlign: "center",
-    color: COLORS.darkGreen,
-    fontSize: 40
   },
   addButton: {
     position: "absolute",

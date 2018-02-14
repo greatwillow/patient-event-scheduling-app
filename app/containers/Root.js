@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View } from "react-native";
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../constants/dimensions";
+import { Constants } from "expo";
 import PropTypes from "prop-types";
 import { COLORS } from "../constants/colors";
 import * as actions from "../data/appActions";
@@ -8,6 +9,7 @@ import * as actions from "../data/appActions";
 import { connect } from "react-redux";
 
 import Calendar from "../components/Calendar";
+import ListHeader from "../components/ListHeader";
 import ListOfEvents from "../components/ListOfEvents";
 import ModalLoading from "../components/ModalLoading";
 
@@ -20,7 +22,9 @@ class Root extends Component {
   render() {
     return (
       <View style={styles.mainContainer}>
+        <View style={styles.statusBar} />
         <Calendar {...this.props} />
+        <ListHeader {...this.props} />
         <ListOfEvents {...this.props} />
         <ModalLoading {...this.props} />
       </View>
@@ -54,10 +58,14 @@ Root.propTypes = {
 };
 
 const styles = StyleSheet.create({
+  statusBar: {
+    backgroundColor: COLORS.red,
+    height: Constants.statusBarHeight
+  },
   mainContainer: {
-    flex: 1,
+    flex: 0,
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
+    height: SCREEN_HEIGHT + Constants.statusBarHeight,
     backgroundColor: COLORS.white
   }
 });

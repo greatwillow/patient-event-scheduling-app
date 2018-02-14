@@ -9,18 +9,27 @@ class Calendar extends Component {
   constructor() {
     super();
     this.state = {
-      calendarHeight: SCREEN_HEIGHT / 7 * 3
+      calendarHeight: SCREEN_HEIGHT / 12 * 7,
+      calendarContainerHeight: SCREEN_HEIGHT / 12 * 6,
+      calendarContainerPadding: 15,
+      calendarContainerOpacity: 1
     };
   }
 
   componentDidMount = () => {
     if (this.props.listUI.listPurpose === "ShowAllDates") {
       this.setState({
-        calendarScale: 1
+        calendarHeight: 0,
+        calendarWidth: 0,
+        calendarContainerHeight: 0,
+        calendarContainerPadding: 0,
+        calendarContainerOpacity: 0
       });
     } else if (this.props.listUI.listPurpose === "ShowSelectedDate") {
       this.setState({
-        calendarHeight: SCREEN_HEIGHT / 2
+        calendarHeight: SCREEN_HEIGHT / 12 * 7,
+        calendarContainerHeight: SCREEN_HEIGHT / 12 * 6,
+        calendarContainerPadding: 15
       });
     }
   };
@@ -28,10 +37,16 @@ class Calendar extends Component {
     if (this.props.listUI.listPurpose !== nextProps.listUI.listPurpose) {
       if (nextProps.listUI.listPurpose === "ShowAllDates") {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        this.setState({ calendarHeight: 1 });
+        this.setState({ calendarHeight: 0 });
+        this.setState({ calendarContainerHeight: 0 });
+        this.setState({ calendarContainerPadding: 0 });
+        this.setState({ calendarContainerOpacity: 0 });
       } else if (nextProps.listUI.listPurpose === "ShowSelectedDate") {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        this.setState({ calendarHeight: SCREEN_HEIGHT / 2 });
+        this.setState({ calendarHeight: SCREEN_HEIGHT / 12 * 7 });
+        this.setState({ calendarContainerHeight: SCREEN_HEIGHT / 12 * 6 });
+        this.setState({ calendarContainerPadding: 15 });
+        this.setState({ calendarContainerOpacity: SCREEN_WIDTH });
       }
     }
   };
@@ -42,9 +57,19 @@ class Calendar extends Component {
 
   render() {
     return (
-      <View style={styles.calendarContainer}>
+      <View
+        style={[
+          styles.calendarContainer,
+          {
+            height: this.state.calendarContainerHeight,
+            padding: this.state.calendarContainerPadding,
+            opacity: this.state.calendarContainerOpacity
+          }
+        ]}
+      >
         <CalendarPicker
           height={this.state.calendarHeight}
+          width={this.state.calendarWidth}
           onDateChange={this._onDateChange}
         />
       </View>
@@ -54,11 +79,9 @@ class Calendar extends Component {
 
 const styles = StyleSheet.create({
   calendarContainer: {
+    flex: 0,
     width: SCREEN_WIDTH,
-    backgroundColor: COLORS.white,
-    padding: 10,
-    paddingBottom: 10,
-    marginTop: 30
+    backgroundColor: COLORS.white
   }
 });
 
