@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255,255,255,0.8)",
     padding: 5,
     paddingLeft: 80,
-    marginTop: 5,
-    marginBottom: 5
+    marginTop: 2,
+    marginBottom: 2
   },
   listText: {
     color: "black",

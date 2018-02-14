@@ -14,6 +14,7 @@ import ModalGeneric from "./ModalGeneric";
 import ModalLoading from "../components/ModalLoading";
 
 class ListOfEvents extends Component {
+
   //--------------------------------------------------
   // Setting ID as the key for FlatList
   //--------------------------------------------------
@@ -53,17 +54,15 @@ class ListOfEvents extends Component {
   };
 
   render() {
-    let eventsToShow;
-    if (this.props.listUI.listPurpose === "ShowAllEvents") {
-      eventsToShow = this.props.events.events;
-    } else {
-      eventsToShow = this._determineEventsToShow();
-    }
 
     return (
       <View style={styles.eventListContainer}>
         <FlatList
-          data={eventsToShow}
+          data={
+            this.props.listUI.listPurpose === "ShowAllDates"
+              ? this.props.events.events
+              : this._determineEventsToShow()
+          }
           keyExtractor={this._keyExtractor}
           renderItem={({ item }) => {
             return <ListEventItem item={item} {...this.props} />;
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     alignItems: "center",
     backgroundColor: COLORS.darkGreen,
-    paddingTop: 5
+    paddingTop: 2
   }
 });
 
