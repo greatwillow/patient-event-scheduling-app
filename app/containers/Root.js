@@ -37,8 +37,6 @@ class Root extends Component {
         <View style={{ flex: 1 }}>
           <ListHeader {...this.props} />
           <ListOfEvents {...this.props} />
-          <ModalLoading {...this.props} />
-
         </View>
         <ButtonAddUpdateDeleteEvent
             style={styles.addButton}
@@ -48,6 +46,7 @@ class Root extends Component {
             onPress={this._onPressDisplayAddModal}
             {...this.props}
           />
+        <ModalLoading {...this.props} />
       </View>
     );
   }
