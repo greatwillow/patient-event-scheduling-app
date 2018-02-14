@@ -40,7 +40,7 @@ class ListEventItem extends Component {
           {...this.props}
           style={styles.updateButton}
           size={25}
-          color={COLORS.darkGreen}
+          color={COLORS.red}
           purpose={"Update"}
           onPress={this._onPressDisplayUpdateModal}
         />
@@ -48,7 +48,7 @@ class ListEventItem extends Component {
           {...this.props}
           style={styles.deleteButton}
           size={25}
-          color={COLORS.darkGreen}
+          color={COLORS.red}
           purpose={"Delete"}
           onPress={this._onPressDisplayDeleteModal}
         />
@@ -69,8 +69,8 @@ ListEventItem.propTypes = {
 const styles = StyleSheet.create({
   listItem: {
     width: SCREEN_WIDTH,
-    borderTopWidth: 2,
-    borderColor: COLORS.lightGreen,
+    //borderTopWidth: 2,
+    //borderColor: COLORS.lightGreen,
     backgroundColor: "rgba(255,255,255,0.8)",
     padding: 5,
     paddingLeft: 80,
@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
   },
   updateButton: {
     position: "absolute",
-    top: 20,
-    left: 20
+    top: 25,
+    left: 25
   },
   deleteButton: {
     position: "absolute",
-    bottom: 20,
-    left: 20
+    bottom: 25,
+    left: 25
   }
 });
 

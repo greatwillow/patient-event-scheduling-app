@@ -65,6 +65,7 @@ class ListHeader extends Component {
       <TouchableOpacity
         style={styles.animatedHeader}
         onPress={this._onPressHeader}
+        activeOpacity={0.9}
       >
         <View style={styles.headerLeftSpacer} />
         <View style={styles.headerCenterSpacer}>
@@ -111,8 +112,8 @@ const styles = StyleSheet.create({
   headerText: {
     textAlign: "center",
     color: COLORS.white,
-    fontSize: 22,
-    paddingTop: 10
+    fontSize: 22
+    //paddingTop: 10
   },
   headerLeftSpacer: {
     flex: 0,
@@ -129,8 +130,8 @@ const styles = StyleSheet.create({
     flex: 0,
     alignItems: "center",
     justifyContent: "center",
-    width: 80,
-    paddingTop: 10
+    width: 80
+    //paddingTop: 10
   },
   headerRightSpacerText: {
     textAlign: "center",

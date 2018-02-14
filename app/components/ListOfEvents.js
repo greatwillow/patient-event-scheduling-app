@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: SCREEN_WIDTH,
     alignItems: "center",
-    backgroundColor: COLORS.red,
+    backgroundColor: COLORS.darkGreen,
     paddingTop: 5
   }
 });
