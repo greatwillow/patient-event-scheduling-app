@@ -18,6 +18,10 @@ class Calendar extends Component {
     };
   }
 
+  //--------------------------------------------------
+  // Calendar either compressed or expanded on Mount
+  //--------------------------------------------------
+
   componentDidMount = () => {
     if (this.props.listUI.listPurpose === "ShowAllDates") {
       this.setState({
@@ -39,6 +43,11 @@ class Calendar extends Component {
       });
     }
   };
+
+  //--------------------------------------------------
+  // Calendar either compressed or expanded when receiving new listPurpose
+  //--------------------------------------------------
+
   componentWillReceiveProps = nextProps => {
     if (this.props.listUI.listPurpose !== nextProps.listUI.listPurpose) {
       if (nextProps.listUI.listPurpose === "ShowAllDates") {
@@ -64,8 +73,12 @@ class Calendar extends Component {
       }
     }
   };
+
   //CHANGING STATE SELECTED DATE BASED ON USER SELECTED DATE
   _onDateChange = date => {
+    this.props.setSelectedDate(date);
+  };
+  _onMonthChange = date => {
     this.props.setSelectedDate(date);
   };
 
@@ -86,6 +99,7 @@ class Calendar extends Component {
           height={this.state.calendarHeight}
           width={this.state.calendarWidth}
           onDateChange={this._onDateChange}
+          onMonthChange={this._onMonthChange}
         />
       </View>
     );

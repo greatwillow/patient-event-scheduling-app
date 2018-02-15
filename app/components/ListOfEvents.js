@@ -14,7 +14,6 @@ import ModalGeneric from "./ModalGeneric";
 import ModalLoading from "../components/ModalLoading";
 
 class ListOfEvents extends Component {
-
   //--------------------------------------------------
   // Setting ID as the key for FlatList
   //--------------------------------------------------
@@ -42,8 +41,8 @@ class ListOfEvents extends Component {
       let showEvent = false;
       //CHECKING IF SELECTED DATE IS BETWEEN START AND END DATES
       if (
-        momentizedSelectedDate.date() >= momentizedEventStartDate.date() &&
-        momentizedSelectedDate.date() <= momentizedEventEndDate.date()
+        momentizedSelectedDate >= momentizedEventStartDate &&
+        momentizedSelectedDate <= momentizedEventEndDate
       ) {
         showEvent = true;
       }
@@ -54,7 +53,6 @@ class ListOfEvents extends Component {
   };
 
   render() {
-
     return (
       <View style={styles.eventListContainer}>
         <FlatList
