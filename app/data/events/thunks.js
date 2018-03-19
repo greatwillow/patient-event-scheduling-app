@@ -27,19 +27,17 @@ const requestAddEventThunk = event => dispatch => {
   })
     .then(res => {
       if (res.status == 200) {
-        console.log("SUCCESSFULL 200 RESPONSE ", res);
         return res.json();
       } else {
         throw new Error("Something wrong with the server!");
       }
     })
     .then(data => {
-      console.log("DATA IS ", data);
       dispatch(actions.localAddEvent(data));
       dispatch(actions.setLoadingModalVisibility(false));
     })
     .catch(err => {
-      console.log("CATCH ERROR IS ", err);
+      console.err("Error Posting Event: ", err);
     });
 };
 
@@ -54,8 +52,6 @@ const requestGetEventThunk = event => dispatch => {
 
   const GET_EVENT_URI = `${BASE_URI}${event.id}`;
 
-  console.log("GETTING EVENT ", GET_EVENT_URI);
-
   return fetch(GET_EVENT_URI, {
     headers: new Headers({
       Accept: "application/json",
@@ -65,18 +61,16 @@ const requestGetEventThunk = event => dispatch => {
   })
     .then(res => {
       if (res.status == 200) {
-        console.log("SUCCESSFULL 200 RESPONSE ", res);
         return res.json();
       } else {
         throw new Error("Something wrong with the server!");
       }
     })
     .then(data => {
-      console.log("Heres the get data ", data);
       dispatch(actions.setLoadingModalVisibility(false));
     })
     .catch(err => {
-      console.log("CATCH ERROR IS ", err);
+      console.err("Error while getting event: ", err);
     });
 };
 
@@ -87,8 +81,6 @@ const requestGetEventThunk = event => dispatch => {
 const requestGetAllEventsThunk = event => dispatch => {
   const GET_ALL_EVENTS_URI = BASE_URI;
 
-  console.log("GETTING ALL EVENTs ", GET_ALL_EVENTS_URI);
-
   return fetch(GET_ALL_EVENTS_URI, {
     headers: new Headers({
       Accept: "application/json",
@@ -98,19 +90,17 @@ const requestGetAllEventsThunk = event => dispatch => {
   })
     .then(res => {
       if (res.status == 200) {
-        console.log("SUCCESSFULL 200 RESPONSE ", res);
         return res.json();
       } else {
         throw new Error("Something wrong with the server!");
       }
     })
     .then(data => {
-      console.log("Heres the get data ", data);
       data.map(e => dispatch(actions.localAddEvent(e)));
       dispatch(actions.setLoadingModalVisibility(false));
     })
     .catch(err => {
-      console.log("CATCH ERROR IS ", err);
+      console.err("Error while getting all events: ", err);
     });
 };
 
@@ -151,7 +141,7 @@ const requestUpdateEventThunk = event => dispatch => {
       dispatch(actions.setLoadingModalVisibility(false));
     })
     .catch(err => {
-      console.log("CATCH ERROR IS ", err);
+      console.err("Error while updating event:  ", err);
     });
 };
 
@@ -162,8 +152,6 @@ const requestUpdateEventThunk = event => dispatch => {
 const requestDeleteEventThunk = event => dispatch => {
   const DELETE_EVENT_URI = `${BASE_URI}${event.id}`;
 
-  console.log("DEL URI ", DELETE_EVENT_URI);
-
   return fetch(DELETE_EVENT_URI, {
     headers: new Headers({
       Accept: "application/json",
@@ -173,7 +161,6 @@ const requestDeleteEventThunk = event => dispatch => {
   })
     .then(res => {
       if (res.status == 200) {
-        console.log("SUCCESSFULL 200 RESPONSE ", res);
         return res.json();
       } else {
         throw new Error("Something wrong with the server!");
@@ -184,7 +171,7 @@ const requestDeleteEventThunk = event => dispatch => {
       dispatch(actions.setLoadingModalVisibility(false));
     })
     .catch(err => {
-      console.log("CATCH ERROR IS ", err);
+      console.err("Error while deleting event: ", err);
     });
 };
 

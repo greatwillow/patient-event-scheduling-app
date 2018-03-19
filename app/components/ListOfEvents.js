@@ -48,7 +48,6 @@ class ListOfEvents extends Component {
       }
       return showEvent;
     });
-    console.log("EVENTS TO SHOW ", eventsToShow);
     return eventsToShow;
   };
 

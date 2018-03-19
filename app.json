@@ -1,5 +1,9 @@
 {
   "expo": {
-    "sdkVersion": "25.0.0"
+   "name": "An Event Scheduling App",
+   "icon": "./app/assets/icons/main-app-entry-icon-calendar.png",
+   "version": "1.0.0",
+   "slug": "an-event-scheduling-app",
+   "sdkVersion": "25.0.0"
   }
 }
