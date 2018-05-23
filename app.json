@@ -1,9 +1,21 @@
 {
   "expo": {
-   "name": "An Event Scheduling App",
-   "icon": "./app/assets/icons/main-app-entry-icon-calendar.png",
-   "version": "1.0.0",
-   "slug": "an-event-scheduling-app",
-   "sdkVersion": "25.0.0"
+    "name": "The Tiny Eventalizer",
+    "icon": "./app/assets/icons/main-app-entry-icon-calendar.png",
+    "version": "1.0.0",
+    "slug": "the-tiny-eventalizer",
+    "sdkVersion": "25.0.0",
+    "description":
+      "This is a day scale events scheduling app made with react-native for ios and android devices. This app is designed to allow for events to be created for specific date periods. Upon creating or updating an event, the app queries the user for the event duration and appropriately displays events for the dates they were assigned to. For more information, please go to https://github.com/greatwillow/the-tiny-eventalizer",
+    "splash": {
+      "ios": {
+        "backgroundImage": "./assets/splash.png",
+        "backgroundColor": "#E96278"
+      },
+      "android": {
+        "backgroundImage": "./assets/splash.png",
+        "backgroundColor": "#E96278"
+      }
+    }
   }
 }

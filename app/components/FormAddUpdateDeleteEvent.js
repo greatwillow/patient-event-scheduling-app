@@ -1,17 +1,17 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Text,
   TextInput,
   TouchableWithoutFeedback,
   StyleSheet,
   View
-} from "react-native";
-import moment from "moment";
-import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../constants/dimensions";
-import { COLORS } from "../constants/colors";
-import { checkIfInteger } from "../utils/checkIfInteger";
-import ButtonGeneric from "./ButtonGeneric";
-import CustomFontText from "./CustomFontText";
+} from 'react-native';
+import moment from 'moment';
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../constants/dimensions';
+import { COLORS } from '../constants/colors';
+import { checkIfInteger } from '../utils/checkIfInteger';
+import ButtonGeneric from './ButtonGeneric';
+import CustomFontText from './CustomFontText';
 
 class FormAddUpdateDeleteEvent extends Component {
   constructor() {
@@ -26,7 +26,7 @@ class FormAddUpdateDeleteEvent extends Component {
       nameFieldTouched: false,
       nameFieldProper: true,
       nameFieldValid: true,
-      durationString: "",
+      durationString: '',
       duration: 0,
       durationFieldTouched: false,
       durationFieldProper: true,
@@ -39,7 +39,7 @@ class FormAddUpdateDeleteEvent extends Component {
   //--------------------------------------------------
 
   componentDidMount = () => {
-    if (this.props.modalUI.modalPurpose == "Update") {
+    if (this.props.modalUI.modalPurpose == 'Update') {
       this.setState({
         title: this.props.selectedEvent.title,
         patientName: this.props.selectedEvent.patientName,
@@ -65,32 +65,28 @@ class FormAddUpdateDeleteEvent extends Component {
 
   _triggerAddUpdateDelete = () => {
     const id =
-      this.props.modalUI.modalPurpose === "ADD"
-        ? null
-        : this.props.selectedEvent.id;
+      this.props.modalUI.modalPurpose === 'ADD' ? null : this.props.selectedEvent.id;
 
     //CALIBRATING END DATE TO CORRESPOND WITH EXISTING EVENT WHEN UPDATED
     let calibratedStartDate;
     let calibratedEndDate;
-    if (this.props.modalUI.modalPurpose == "Add") {
+    if (this.props.modalUI.modalPurpose == 'Add') {
       calibratedStartDate = this.props.selectedDate.selectedDate;
       calibratedEndDate = moment(calibratedStartDate).add(
         this.state.duration - 1,
-        "days"
+        'days'
       );
-    } else if (this.props.modalUI.modalPurpose == "Update") {
+    } else if (this.props.modalUI.modalPurpose == 'Update') {
       calibratedStartDate = this.props.selectedEvent.eventStartDate;
       calibratedEndDate = moment(calibratedStartDate).add(
         this.state.duration - 1,
-        "days"
+        'days'
       );
     }
 
     //FINAL START AND END DATES
-    let eventStartDate = moment
-      .parseZone(calibratedStartDate)
-      .format("YYYY-MM-DD");
-    let eventEndDate = moment.parseZone(calibratedEndDate).format("YYYY-MM-DD");
+    let eventStartDate = moment.parseZone(calibratedStartDate).format('YYYY-MM-DD');
+    let eventEndDate = moment.parseZone(calibratedEndDate).format('YYYY-MM-DD');
 
     //FINAL EVENT OBJECT TO BE SENT
     const event = {
@@ -103,12 +99,12 @@ class FormAddUpdateDeleteEvent extends Component {
     this.props.setFormModalVisibility(false);
 
     //ROUTING DIFFERENT REQUESTS
-    if (this.props.modalUI.modalPurpose === "Add") {
+    if (this.props.modalUI.modalPurpose === 'Add') {
       this.props.setLoadingModalVisibility(true);
       this.props.requestAddEvent(event);
-    } else if (this.props.modalUI.modalPurpose === "Update") {
+    } else if (this.props.modalUI.modalPurpose === 'Update') {
       this.props.requestUpdateEvent(event);
-    } else if (this.props.modalUI.modalPurpose === "Delete") {
+    } else if (this.props.modalUI.modalPurpose === 'Delete') {
       this.props.requestDeleteEvent(event);
     }
   };
@@ -120,9 +116,9 @@ class FormAddUpdateDeleteEvent extends Component {
 
   _onSubmit = () => {
     preTriggerValidation = new Promise((res, rej) => {
-      if (this.props.modalUI.modalPurpose === "Delete") {
+      if (this.props.modalUI.modalPurpose === 'Delete') {
         this._triggerAddUpdateDelete();
-      } else if (this.props.modalUI.modalPurpose === "Update") {
+      } else if (this.props.modalUI.modalPurpose === 'Update') {
         if (this.state.titleFieldTouched === false) {
           this.setState({
             titleFieldTouched: true
@@ -171,10 +167,7 @@ class FormAddUpdateDeleteEvent extends Component {
               nameFieldValid: true
             });
           }
-          if (
-            !this.state.durationFieldTouched ||
-            !this.state.durationFieldProper
-          ) {
+          if (!this.state.durationFieldTouched || !this.state.durationFieldProper) {
             this.setState({
               durationFieldValid: false
             });
@@ -185,9 +178,7 @@ class FormAddUpdateDeleteEvent extends Component {
           }
         }
       })
-      .catch(err =>
-        console.error("Error in preTrigger validation Promise ", err)
-      );
+      .catch(err => console.error('Error in preTrigger validation Promise ', err));
   };
 
   //--------------------------------------------------
@@ -253,8 +244,8 @@ class FormAddUpdateDeleteEvent extends Component {
 
   render() {
     if (
-      this.props.modalUI.modalPurpose === "Add" ||
-      this.props.modalUI.modalPurpose === "Update"
+      this.props.modalUI.modalPurpose === 'Add' ||
+      this.props.modalUI.modalPurpose === 'Update'
     ) {
       //WHAT TO SHOW IN CASES OF 'ADD' or 'UPDATE'
       return (
@@ -264,29 +255,29 @@ class FormAddUpdateDeleteEvent extends Component {
               {`${this.props.modalUI.modalPurpose} Event`}
             </CustomFontText>
             <CustomFontText style={{ fontSize: 15, paddingBottom: 10 }}>
-              For: {this.props.selectedDate.selectedDate.format("LL")}
+              For: {this.props.selectedDate.selectedDate.format('LL')}
             </CustomFontText>
             {/* ----------------------------INPUT FOR TITLE--------------------- */}
             <TextInput
               ref={input => {
-                this.inputs["one"] = input;
+                this.inputs['one'] = input;
               }}
               style={[
                 styles.textInput,
                 this.state.titleFieldValid
-                  ? { borderColor: "black", borderWidth: 1 }
-                  : { borderColor: "red", borderWidth: 3 }
+                  ? { borderColor: 'black', borderWidth: 1 }
+                  : { borderColor: 'red', borderWidth: 3 }
               ]}
               defaultValue={this.state.title}
-              placeholder={"Event Title (3 or more chars)"}
-              placeholderTextColor={this.state.titleFieldValid ? "grey" : "red"}
+              placeholder={'Event Title (3 or more chars)'}
+              placeholderTextColor={this.state.titleFieldValid ? 'grey' : 'red'}
               onChangeText={this._validifyTitleInput}
               onSubmitEditing={() => {
-                this.focusNextField("two");
+                this.focusNextField('two');
               }}
               blurOnSubmit={false}
-              returnKeyType={"next"}
-              underlineColorAndroid={"rgba(0,0,0,0)"}
+              returnKeyType={'next'}
+              underlineColorAndroid={'rgba(0,0,0,0)'}
               autoCapitalize="words"
               autoCorrect={false}
               autoFocus={true}
@@ -296,25 +287,25 @@ class FormAddUpdateDeleteEvent extends Component {
             {/* ----------------------------INPUT FOR NAME--------------------- */}
             <TextInput
               ref={input => {
-                this.inputs["two"] = input;
+                this.inputs['two'] = input;
               }}
               style={[
                 styles.textInput,
                 this.state.nameFieldValid
-                  ? { borderColor: "black", borderWidth: 1 }
-                  : { borderColor: "red", borderWidth: 3 }
+                  ? { borderColor: 'black', borderWidth: 1 }
+                  : { borderColor: 'red', borderWidth: 3 }
               ]}
               defaultValue={this.state.patientName}
-              placeholder={"Patient Name (3 or more chars)"}
-              placeholderTextColor={this.state.nameFieldValid ? "grey" : "red"}
+              placeholder={'Event Description (3 or more chars)'}
+              placeholderTextColor={this.state.nameFieldValid ? 'grey' : 'red'}
               onChangeText={this._validifyNameInput}
               onSubmitEditing={() => {
-                this.focusNextField("three");
+                this.focusNextField('three');
               }}
               valid={this.state.nameFieldValid}
               blurOnSubmit={false}
-              returnKeyType={"next"}
-              underlineColorAndroid={"rgba(0,0,0,0)"}
+              returnKeyType={'next'}
+              underlineColorAndroid={'rgba(0,0,0,0)'}
               autoCapitalize="words"
               autoCorrect={false}
               clearButtonMode="while-editing"
@@ -323,29 +314,27 @@ class FormAddUpdateDeleteEvent extends Component {
             {/* ----------------------------INPUT FOR DURATION--------------------- */}
             <TextInput
               ref={input => {
-                this.inputs["three"] = input;
+                this.inputs['three'] = input;
               }}
               style={[
                 styles.textInput,
                 this.state.durationFieldValid
-                  ? { borderColor: "black", borderWidth: 1 }
-                  : { borderColor: "red", borderWidth: 3 }
+                  ? { borderColor: 'black', borderWidth: 1 }
+                  : { borderColor: 'red', borderWidth: 3 }
               ]}
               defaultValue={this.state.durationString}
-              placeholder={"Event Duration (between 1 and 14)"}
-              placeholderTextColor={
-                this.state.durationFieldValid ? "grey" : "red"
-              }
+              placeholder={'Event Duration (between 1 and 14)'}
+              placeholderTextColor={this.state.durationFieldValid ? 'grey' : 'red'}
               onChangeText={this._validifyDurationInput}
               onSubmitEditing={this._onSubmit}
               blurOnSubmit={true}
-              returnKeyType={"done"}
-              underlineColorAndroid={"rgba(0,0,0,0)"}
+              returnKeyType={'done'}
+              underlineColorAndroid={'rgba(0,0,0,0)'}
               autoCapitalize="words"
               autoCorrect={false}
               clearButtonMode="while-editing"
               maxLength={50}
-              keyboardType={"numeric"}
+              keyboardType={'numeric'}
             />
             {/* ----------------------------SUBMIT BUTTON--------------------- */}
             <ButtonGeneric
@@ -355,14 +344,14 @@ class FormAddUpdateDeleteEvent extends Component {
           </View>
         </TouchableWithoutFeedback>
       );
-    } else if (this.props.modalUI.modalPurpose === "Delete") {
+    } else if (this.props.modalUI.modalPurpose === 'Delete') {
       //WHAT TO SHOW IN CASE OF 'DELETE'
       return (
         <TouchableWithoutFeedback onPress={() => {}}>
           <View style={styles.formContainerDelete}>
             <CustomFontText
               style={{
-                textAlign: "center",
+                textAlign: 'center',
                 fontSize: 20,
                 paddingBottom: 20,
                 padding: 5
@@ -385,8 +374,8 @@ const styles = StyleSheet.create({
   formContainer: {
     height: SCREEN_HEIGHT / 2,
     width: SCREEN_WIDTH / 6 * 5,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: COLORS.lightGreen,
     borderRadius: 10,
     padding: 30
@@ -394,22 +383,22 @@ const styles = StyleSheet.create({
   formContainerDelete: {
     height: SCREEN_HEIGHT / 3,
     width: SCREEN_WIDTH / 6 * 5,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: COLORS.lightGreen,
     borderRadius: 10,
     padding: 30
   },
   textInput: {
     width: SCREEN_WIDTH / 6 * 4,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     marginBottom: 5,
     marginTop: 5,
     padding: 5,
     paddingLeft: 10,
     borderRadius: 5,
     height: 40,
-    alignSelf: "center"
+    alignSelf: 'center'
   }
 });
 
